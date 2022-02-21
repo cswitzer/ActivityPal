@@ -1,8 +1,8 @@
 package com.example.activitypal.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -44,7 +44,9 @@ public class APICallHandler {
                     response -> {
                         try {
                             if (response.getString("status").equals("Approved")) {
-                                Log.d(TAG, "MakeRegisterRequest: It worked");
+                                // Intent intent = new Intent(context, LoginActivity.class);
+                                // context.startActivity(intent);
+
                             } else {
                                 Log.d(TAG, "MakeRegisterRequest: It did not work");
                             }
@@ -61,4 +63,10 @@ public class APICallHandler {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(postRequest);
     }
+
+    // TODO: Add the login functionality
+    // make an api request to server
+    // check if the email or hashed version of the password exists in the database
+    // create json web token on the server to authenticate logging in
+    // store the json web token in the user's shared preferences
 }
