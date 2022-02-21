@@ -24,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+        SetNavFragView();
 
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-        // get a reference to 'fragment_register' with 'getSelectedItem()'
+        // will update as long as fragments invoke 'selectItem()' in ItemViewModel
         viewModel.getSelectedItem().observe(this, item -> {
             if (item.equals(1)) {
                 SetRegFragView();
@@ -42,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
             // TODO: log the user in using API call handler (check to see if this data is actually in the database)
             Log.d(TAG, "");
         }
+    }
 
+    private void SetNavFragView() {
         Fragment navFragment = new NavFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.test, navFragment)
                 .commit();
-
     }
 
     private void SetRegFragView() {
