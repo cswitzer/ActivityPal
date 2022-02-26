@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
         // will update as long as fragments invoke 'selectItem()' in ItemViewModel
         viewModel.getSelectedItem().observe(this, item -> {
             if (item.equals(1)) {
-                SetRegFragView();
+                Intent regIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(regIntent);
             } else if (item.equals(2)) {
-                SetLoginFragView();
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
             }
         });
 
@@ -51,22 +54,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.test, navFragment)
-                .commit();
-    }
-
-    private void SetRegFragView() {
-        Fragment regFragment = new RegisterFragment();
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.my_container, regFragment)
-                .commit();
-    }
-
-    private void SetLoginFragView() {
-        Fragment loginFragment = new LoginFragment();
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.my_container, loginFragment)
                 .commit();
     }
 

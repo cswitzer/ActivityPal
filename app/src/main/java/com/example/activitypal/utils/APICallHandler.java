@@ -1,7 +1,6 @@
 package com.example.activitypal.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -18,7 +17,7 @@ import org.json.JSONObject;
 
 public class APICallHandler {
     private static final String TAG = "APICallHandler";
-    private static String baseURL = "http://10.0.2.2:8000/";
+    private static String baseURL = "http://10.0.2.2:3000/";
     private static RequestQueue rq;
     private static Moshi moshi;
 
@@ -44,8 +43,6 @@ public class APICallHandler {
                     response -> {
                         try {
                             if (response.getString("status").equals("Approved")) {
-                                // Intent intent = new Intent(context, LoginActivity.class);
-                                // context.startActivity(intent);
 
                             } else {
                                 Log.d(TAG, "MakeRegisterRequest: It did not work");

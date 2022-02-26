@@ -42,8 +42,8 @@ public class NavFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
         binding.Register.setOnClickListener(view1 -> {
-            // this code is just so I can hook up btn event listeners to the main class
-            // as long as selectItem is called, main activity will update the "my_container"
+            // this code is just so I can hook up btn event listeners in the fragment to the main activity
+            // As long as selectItem is called, main activity will update the "my_container"
             viewModel.selectItem(REGISTER_ID);
         });
 
