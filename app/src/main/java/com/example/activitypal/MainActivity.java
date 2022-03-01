@@ -15,11 +15,12 @@ import com.example.activitypal.utils.ItemViewModel;
 import com.example.activitypal.utils.Pair;
 import com.example.activitypal.utils.SharedPrefsHandler;
 
+// Our app opens through the login activity, which contains a link to the register activity.
+// MainActivity will contain local area activities and links to user account information.
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ItemViewModel viewModel;
     ActivityMainBinding binding;
-    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
-        SetNavFragView();
-
-        viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-        // will update as long as fragments invoke 'selectItem()' in ItemViewModel
-        viewModel.getSelectedItem().observe(this, item -> {
-            if (item.equals(1)) {
-                Intent regIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(regIntent);
-            } else if (item.equals(2)) {
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
-        });
 
         // don't make user login again if they already have
         Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(MainActivity.this);
@@ -47,14 +35,6 @@ public class MainActivity extends AppCompatActivity {
             // TODO: log the user in using API call handler (check to see if this data is actually in the database)
             Log.d(TAG, "");
         }
-    }
-
-    private void SetNavFragView() {
-        Fragment navFragment = new NavFragment();
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.test, navFragment)
-                .commit();
     }
 
 }

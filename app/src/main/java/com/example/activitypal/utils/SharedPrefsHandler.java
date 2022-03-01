@@ -15,10 +15,23 @@ public class SharedPrefsHandler {
         editor.apply();
     }
 
+    public static void SaveUserToken(Context context, String token) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.apply();
+    }
+
     public static Pair<String, String> GetCredPref(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
         String email = preferences.getString("email", "");
         String password = preferences.getString("password", "");
         return new Pair<>(email, password);
+    }
+
+    public static String GetUserToken(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
+        String token = preferences.getString("token", "");
+        return token;
     }
 }

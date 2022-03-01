@@ -23,8 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
             // NEVER TRUST THE USER!!! VALIDATE AND SANITIZE USER INPUT YOU MADMAN!!!
             String email = binding.email.getText().toString().trim();
             String password = binding.password.getText().toString();
-            // TODO: make an api call
-            SharedPrefsHandler.SaveUserCred(RegisterActivity.this, email, password);
             APICallHandler.HandleRegistration(RegisterActivity.this, email, password);
         });
     }
