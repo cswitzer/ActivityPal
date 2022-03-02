@@ -22,6 +22,12 @@ public class SharedPrefsHandler {
         editor.apply();
     }
 
+    public static void ClearUserPref(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear().apply();
+    }
+
     public static Pair<String, String> GetCredPref(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
         String email = preferences.getString("email", "");

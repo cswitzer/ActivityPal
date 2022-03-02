@@ -12,9 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
-import com.example.activitypal.RegisterActivity;
 import com.example.activitypal.models.User;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
@@ -45,7 +43,19 @@ public class APICallHandler {
         JsonAdapter<User> adapter = moshi.adapter(User.class);
         String userJson = adapter.toJson(new User(email, password));
         StringBuilder updatedURL = new StringBuilder(baseURL).append("users/login");
-        // success will be made true if this succeeds
+        MakeRequest(context, userJson, updatedURL);
+    }
+
+    public static void HandleLogout(Context context, String email, String password) {
+        type = "Logout";
+        InitVolleyAndMoshi(context);
+        JsonAdapter<User> adapter = moshi.adapter(User.class);
+        // set the user and it's token
+        User currentUser = new User(email, password);
+        currentUser.setToken(SharedPrefsHandler.GetUserToken(context));
+
+        String userJson = adapter.toJson(currentUser);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("users/logout");
         MakeRequest(context, userJson, updatedURL);
     }
 
@@ -62,7 +72,7 @@ public class APICallHandler {
                         try {
                             if (response.getString("status").equals("Approved")) {
                                 String token = response.getString("token");
-                                SwitchActivities(context, type, token);
+                                HandleResponse(context, type, token);
                             } else {
                                 Log.d(TAG, "MakeRequest: Failed");
                             }
@@ -81,17 +91,21 @@ public class APICallHandler {
         rq.add(postRequest);
     }
 
-    private static void SwitchActivities(Context context, String type, String token) {
+    private static void HandleResponse(Context context, String type, String token) {
         switch (type) {
             case "Register":
                 context.startActivity(new Intent(context, LoginActivity.class));
-                Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Registering...", Toast.LENGTH_SHORT).show();
                 break;
             case "Login":
                 SharedPrefsHandler.SaveUserToken(context, token);
                 context.startActivity(new Intent(context, MainActivity.class));
-                Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
                 break;
+            case "Logout":
+                SharedPrefsHandler.ClearUserPref(context);
+                context.startActivity(new Intent(context, LoginActivity.class));
+                Toast.makeText(context, "Signing out...", Toast.LENGTH_SHORT).show();
         }
     }
 
