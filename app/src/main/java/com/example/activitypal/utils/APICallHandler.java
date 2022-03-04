@@ -106,12 +106,16 @@ public class APICallHandler {
                 SharedPrefsHandler.ClearUserPref(context);
                 context.startActivity(new Intent(context, LoginActivity.class));
                 Toast.makeText(context, "Signing out...", Toast.LENGTH_SHORT).show();
+                break;
+            case "CreateActivity":
+                Log.d(TAG, "HandleResponse: Create Activity");
+                break;
+            case "DeleteActivity":
+                Log.d(TAG, "HandleResponse: Delete Activity");
+                break;
+            case "ViewActivity":
+                Log.d(TAG, "HandleResponse: View Activity");
+                break;
         }
     }
-
-    // TODO: Add the login functionality
-    // make an api request to server
-    // check if the email or hashed version of the password exists in the database
-    // create json web token on the server to authenticate logging in
-    // store the json web token in the user's shared preferences
 }

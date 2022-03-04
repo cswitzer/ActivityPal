@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.activitypal.databinding.ActivityLoginBinding;
 import com.example.activitypal.utils.APICallHandler;
+import com.example.activitypal.utils.Pair;
 import com.example.activitypal.utils.SharedPrefsHandler;
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,5 +35,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent regIntent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(regIntent);
         });
+
+        // don't make user login again if they already have
+        Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(LoginActivity.this);
+        if (!credPair.t.equals("") && !credPair.u.equals("")) {
+            // TODO: The user is logged in, so direct them to the MainActivity
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 }

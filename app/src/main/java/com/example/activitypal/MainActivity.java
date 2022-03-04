@@ -37,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
             String token = SharedPrefsHandler.GetUserToken(MainActivity.this);
             APICallHandler.HandleLogout(MainActivity.this, credPair.t, credPair.u);
         });
-
-        // don't make user login again if they already have
-        Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(MainActivity.this);
-        if (!credPair.t.equals("") && !credPair.u.equals("")) {
-            // TODO: log the user in using API call handler (check to see if this data is actually in the database)
-            Log.d(TAG, "");
-        }
     }
 
 }
