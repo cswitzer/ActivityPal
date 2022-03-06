@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
+import com.example.activitypal.models.Activity;
 import com.example.activitypal.models.User;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -59,6 +60,18 @@ public class APICallHandler {
         MakeRequest(context, userJson, updatedURL);
     }
 
+    public static void HandleActivityAdding(Context context, String name) {
+        type = "CreateActivity";
+        InitVolleyAndMoshi(context);
+        JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
+        // set token so that users are authenticated before adding an activity
+        Activity userActivity = new Activity(name);
+        userActivity.setToken(SharedPrefsHandler.GetUserToken(context));
+        String activityJson = adapter.toJson(userActivity);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
+        MakeRequest(context, activityJson, updatedURL);
+    }
+
     private static void InitVolleyAndMoshi(Context context) {
         rq = Volley.newRequestQueue(context);
         moshi = new Moshi.Builder().build();
@@ -73,7 +86,10 @@ public class APICallHandler {
                             if (response.getString("status").equals("Approved")) {
                                 String token = response.getString("token");
                                 HandleResponse(context, type, token);
-                            } else {
+                            } else if (response.getString("status").equals("AApproved")) {
+                                Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
                                 Log.d(TAG, "MakeRequest: Failed");
                             }
                         } catch (JSONException e) {

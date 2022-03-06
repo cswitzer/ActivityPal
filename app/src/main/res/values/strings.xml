@@ -19,4 +19,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="create_new_account">Create New Account</string>
     <string name="logout">Logout</string>
+    <string name="addactivity">addActivity</string>
+    <string name="activity_name">Activity Name</string>
+    <string name="add_an_activity">Add an Activity</string>
+    <string name="add">Add</string>
 </resources>

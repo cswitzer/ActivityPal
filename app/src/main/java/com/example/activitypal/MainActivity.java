@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+
+        // TODO: use a fragment to do this, since MainActivity will consists of various fragments
+        // the fragments are: my activities, create activities, activities in my area, etc.
+        binding.activityBtn.setOnClickListener(view -> {
+            String name = binding.ActivityName.getText().toString();
+            APICallHandler.HandleActivityAdding(MainActivity.this, name);
+        });
     }
 
     @Override
