@@ -10,6 +10,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -33,21 +35,36 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 // Our app opens through the login activity, which contains a link to the register activity.
 // MainActivity will contain local area activities and links to user account information.
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private final int LOCATION_REQUEST_CODE = 10001;
+    private List<Address> addresses;
 
     ActivityMainBinding binding;
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
+    Geocoder geocoder;
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
+            // use geocoder to convert global coordinates to a city name
             for (Location location : locationResult.getLocations()) {
                 Log.d(TAG, "onLocationResult: " + location.toString());
+                try {
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String city = addresses.get(0).getLocality();
+                Log.d(TAG, "onLocationResult: " + city);
             }
         }
     };
@@ -58,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+        geocoder = new Geocoder(this, Locale.getDefault());
+        addresses = new ArrayList<>();
 
         // TODO: use a fragment to do this, since MainActivity will consists of various fragments
         // the fragments are: my activities, create activities, activities in my area, etc.
@@ -99,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logout_menu_item) {// credPair.t is email and credPair.u is password
+            // Get user credentials from shared preferences for auth purposes
             Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(MainActivity.this);
             String token = SharedPrefsHandler.GetUserToken(MainActivity.this);
             APICallHandler.HandleLogout(MainActivity.this, credPair.t, credPair.u);
@@ -110,8 +130,11 @@ public class MainActivity extends AppCompatActivity {
     private void checkSettingsAndStartLocationUpdates() {
         LocationSettingsRequest request = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest).build();
+        // Determine if the relevant system settings are enabled on the device to carry out the desired location request.
+        // Optionally, invoke a dialog that allows the user to enable the necessary location settings with a single tap.
         SettingsClient client = LocationServices.getSettingsClient(this);
 
+        // Checks the client's settings to see if location requests are possible: an async task
         Task<LocationSettingsResponse> locationSettingsResponseTask = client.checkLocationSettings(request);
         locationSettingsResponseTask.addOnSuccessListener(locationSettingsResponse -> {
             // settings of device are satisfied and we start location updates
@@ -159,10 +182,12 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission granted
-                // getLastLocation();
                 checkSettingsAndStartLocationUpdates();
             } else {
                 // permission not granted
+                ActivityCompat.requestPermissions(this,
+                        new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                        LOCATION_REQUEST_CODE);
             }
         }
     }
