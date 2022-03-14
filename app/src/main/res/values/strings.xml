@@ -23,4 +23,10 @@
     <string name="activity_name">Activity Name</string>
     <string name="add_an_activity">Add an Activity</string>
     <string name="add">Add</string>
+    <string name="my_activities">My Activities</string>
+    <string name="notifications">Notifications</string>
+    <string name="home">Home</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="notifications_fragment">Notifications Fragment</string>
+    <string name="my_activities_fragment">My Activities Fragment</string>
 </resources>

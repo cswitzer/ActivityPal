@@ -34,6 +34,8 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private final int LOCATION_REQUEST_CODE = 10001;
     private List<Address> addresses;
+
+    // initialize fragments
+    BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment();
+    NotificationsFragment notificationsFragment = new NotificationsFragment();
+    MyActivitiesFragment myActivitiesFragment = new MyActivitiesFragment();
 
     ActivityMainBinding binding;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -80,9 +88,35 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: use a fragment to do this, since MainActivity will consists of various fragments
         // the fragments are: my activities, create activities, activities in my area, etc.
-        binding.activityBtn.setOnClickListener(view -> {
-            String name = binding.ActivityName.getText().toString();
-            APICallHandler.HandleActivityAdding(MainActivity.this, name);
+//        binding.activityBtn.setOnClickListener(view -> {
+//            String name = binding.ActivityName.getText().toString();
+//            APICallHandler.HandleActivityAdding(MainActivity.this, name);
+//        });
+
+        // set to home fragment upon opening the application
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, homeFragment)
+                            .commit();
+                    return true;
+                case R.id.notification:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, notificationsFragment)
+                            .commit();
+                    return true;
+                case R.id.myactivities:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, myActivitiesFragment)
+                            .commit();
+                    return true;
+            }
+            return false;
         });
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
