@@ -3,8 +3,8 @@
     package="com.example.activitypal">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ActivityPal"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".AddActivityActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

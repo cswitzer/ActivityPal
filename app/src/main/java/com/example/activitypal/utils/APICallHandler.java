@@ -2,6 +2,7 @@ package com.example.activitypal.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.util.Log;
 import android.widget.Toast;
 

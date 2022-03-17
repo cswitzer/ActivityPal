@@ -29,4 +29,6 @@
     <string name="home_fragment">Home Fragment</string>
     <string name="notifications_fragment">Notifications Fragment</string>
     <string name="my_activities_fragment">My Activities Fragment</string>
+    <string name="add_my_activity">Add my activity</string>
+    <string name="add_photo">Add Photo</string>
 </resources>

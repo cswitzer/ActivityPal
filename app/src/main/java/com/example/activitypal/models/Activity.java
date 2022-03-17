@@ -1,5 +1,7 @@
 package com.example.activitypal.models;
 
+import android.media.Image;
+
 public class Activity {
     private String name;
     private String token;
