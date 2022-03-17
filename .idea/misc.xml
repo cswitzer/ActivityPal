@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_format_align_justify_24.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.161" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_add_activity.xml" value="0.25" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_login.xml" value="0.34646739130434784" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_main.xml" value="0.33489583333333334" />

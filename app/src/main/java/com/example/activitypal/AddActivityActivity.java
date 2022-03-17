@@ -1,11 +1,17 @@
 package com.example.activitypal;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
@@ -24,18 +30,22 @@ public class AddActivityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_activity);
         binding = DataBindingUtil.setContentView(AddActivityActivity.this, R.layout.activity_add_activity);
 
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+
+        ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    // binding.imageView.setImageURI(result);
-                    Glide.with(AddActivityActivity.this)
-                            .load(result)
-                            .override(500, 500)
-                            .circleCrop()
-                            .into(binding.imageView);
+                    if (result.getResultCode() == RESULT_OK) {
+                        Glide.with(AddActivityActivity.this)
+                                .load(result.getData().getData())
+                                .override(500, 500)
+                                .circleCrop()
+                                .into(binding.imageView);
+                    }
                 });
 
         binding.addPhotoBtn.setOnClickListener(view -> {
-            mGetContent.launch("image/*");
+
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            mGetContent.launch(intent);
         });
     }
 }
