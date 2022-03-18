@@ -43,7 +43,6 @@ public class MyActivitiesFragment extends Fragment {
                 });
 
         addActivityBtn.setOnClickListener(view1 -> {
-            // mGetContent.launch("image/*");
             Intent intent = new Intent(getActivity(), AddActivityActivity.class);
             startActivity(intent);
         });

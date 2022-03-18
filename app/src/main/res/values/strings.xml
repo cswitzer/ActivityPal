@@ -31,4 +31,5 @@
     <string name="my_activities_fragment">My Activities Fragment</string>
     <string name="add_my_activity">Add my activity</string>
     <string name="add_photo">Add Photo</string>
+    <string name="activity_photo">Activity Photo</string>
 </resources>
