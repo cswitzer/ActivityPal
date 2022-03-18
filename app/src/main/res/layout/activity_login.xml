@@ -9,20 +9,26 @@
         tools:context=".LoginActivity">
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginBtn"
+            style="@style/my_custom_btn"
+            android:layout_marginTop="20dp"
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginPassword"
-            style="@style/longBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
 
         <EditText
             android:id="@+id/loginPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:ems="10"
             android:hint="@string/password"
             android:importantForAutofill="no"
@@ -36,30 +42,36 @@
 
         <EditText
             android:id="@+id/loginEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="84dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:ems="10"
             android:hint="@string/email"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/switchToRegBtn"
-            style="@style/longBtn"
-            android:layout_width="268dp"
-            android:layout_height="48dp"
+            style="@style/my_custom_btn"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:text="@string/create_new_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn"
-            app:layout_constraintVertical_bias="0.779" />
+            app:layout_constraintVertical_bias="0.65" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
