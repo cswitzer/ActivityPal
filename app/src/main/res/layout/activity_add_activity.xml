@@ -48,26 +48,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ending_time"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/text_date"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_input"
                 android:drawableStart="@drawable/ic_date"
                 android:drawablePadding="12dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:layout_marginTop="20dp"
                 android:ems="10"
+                android:gravity="center_vertical"
                 android:hint="@string/_01_01_2022"
+                android:importantForAutofill="no"
                 android:inputType="date"
                 android:minHeight="48dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textColorHint="#757575"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_name"
-                android:importantForAutofill="no" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_name" />
 
             <EditText
                 android:id="@+id/activity_name"

@@ -7,7 +7,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,11 +18,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 
 import com.bumptech.glide.Glide;
 import com.example.activitypal.databinding.ActivityAddActivityBinding;
+import com.example.activitypal.utils.DatePickerFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -38,7 +42,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddActivityActivity extends AppCompatActivity {
+public class AddActivityActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "AddActivityActivity";
 
     ActivityAddActivityBinding binding;
@@ -102,6 +106,11 @@ public class AddActivityActivity extends AppCompatActivity {
         binding.addPhotoBtn.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             mGetContent.launch(intent);
+        });
+
+        binding.textDate.setOnClickListener(view -> {
+            DialogFragment datePicker = new DatePickerFragment();
+            datePicker.show(getSupportFragmentManager(), "date picker");
         });
 
         binding.startTime.setOnClickListener(view -> {
@@ -178,5 +187,15 @@ public class AddActivityActivity extends AppCompatActivity {
             String location = binding.autocompleteFragment.toString();
             Log.d(TAG, "onCreate: Activity will commence at " + startTime);
         });
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+        binding.textDate.setText(currentDateString);
     }
 }
