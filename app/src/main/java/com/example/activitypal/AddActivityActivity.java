@@ -8,10 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.TimePicker;
 
 
 import com.bumptech.glide.Glide;
@@ -26,13 +31,23 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddActivityActivity extends AppCompatActivity {
-
     private static final String TAG = "AddActivityActivity";
 
     ActivityAddActivityBinding binding;
+
+    Calendar calendar;
+    private int startHour;
+    private int endHour;
+    private int startMinute;
+    private int endMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +100,83 @@ public class AddActivityActivity extends AppCompatActivity {
                 });
 
         binding.addPhotoBtn.setOnClickListener(view -> {
-
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             mGetContent.launch(intent);
+        });
+
+        binding.startTime.setOnClickListener(view -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    AddActivityActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    (TimePickerDialog.OnTimeSetListener) (timePicker, hour, minute) -> {
+                        // Initialize hour and minute
+                        startHour = hour;
+                        startMinute = minute;
+                        String time = startHour + ":" + startMinute;
+                        SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
+                        try {
+                            Date date = f24Hours.parse(time);
+                            SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
+
+                            // set selected time on text view
+                            binding.startTime.setText(f12Hours.format(date));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }, 12, 0, false
+            );
+            // display previously selected time
+            timePickerDialog.updateTime(startHour, startMinute);
+            timePickerDialog.show();
+        });
+
+        binding.endingTime.setOnClickListener(view -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    AddActivityActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                            // Initialize hour and minute
+                            endHour = hour;
+                            endMinute = minute;
+                            String time = endHour + ":" + endMinute;
+                            SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
+                            try {
+                                Date date = f24Hours.parse(time);
+                                SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
+
+                                // set selected time on text view
+                                binding.endingTime.setText(f12Hours.format(date));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 12, 0, false
+            );
+            // display previously selected time
+            timePickerDialog.updateTime(endHour, endMinute);
+            timePickerDialog.show();
+        });
+
+        binding.addActivityBtn.setOnClickListener(view -> {
+            // format all time data
+            SimpleDateFormat activityDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+            // get all data to be sent to the server
+            binding.imageView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = binding.imageView.getDrawingCache();
+            String activityName = binding.activityName.getText().toString();
+            Date activityDate = new Date();
+            try {
+                activityDate = activityDateFormatter.parse(binding.textDate.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String startTime = binding.startTime.getText().toString();
+            String endTime = binding.endingTime.getText().toString();
+            String location = binding.autocompleteFragment.toString();
+            Log.d(TAG, "onCreate: Activity will commence at " + startTime);
         });
     }
 }
