@@ -60,53 +60,8 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
         binding = ActivityAddActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // This code handles user input for the activity's address
-        Places.initialize(getApplicationContext(), BuildConfig.apiKey);
-        PlacesClient placesClient = Places.createClient(this);
-
-        AutocompleteSupportFragment autocompleteSupportFragment =
-                (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-        assert autocompleteSupportFragment != null;
-        autocompleteSupportFragment.setTypeFilter(TypeFilter.ESTABLISHMENT);
-
-        autocompleteSupportFragment.setLocationBias(RectangularBounds.newInstance(
-                new LatLng(-33.990490, 151.184363),
-                new LatLng(-33.858754, 151.229596)
-        ));
-
-        autocompleteSupportFragment.setCountries("US");
-        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS));
-
-        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(@NonNull Place place) {
-                // add place.getAddress() to database (single out city or town to map to user's current locations)
-                Log.d(TAG, "onPlaceSelected: " + place.getAddress());
-            }
-
-            @Override
-            public void onError(@NonNull Status status) {
-                Log.d(TAG, "onError: " + status);
-            }
-        });
-
-        // This code is for choosing a photo from the user's photo gallery
-        ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Glide.with(AddActivityActivity.this)
-                                .load(result.getData().getData())
-                                .override(500, 500)
-                                .circleCrop()
-                                .into(binding.imageView);
-                    }
-                });
-
-        binding.addPhotoBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            mGetContent.launch(intent);
-        });
+        InitMapsAutoCompleteFrag();
+        PromptUserForGalleryImage();
 
         binding.textDate.setOnClickListener(view -> {
             DialogFragment datePicker = new DatePickerFragment();
@@ -186,6 +141,58 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             String endTime = binding.endingTime.getText().toString();
             String location = binding.autocompleteFragment.toString();
             Log.d(TAG, "onCreate: Activity will commence at " + startTime);
+        });
+    }
+
+    private void InitMapsAutoCompleteFrag() {
+        // This code handles user input for the activity's address
+        Places.initialize(getApplicationContext(), BuildConfig.apiKey);
+        PlacesClient placesClient = Places.createClient(this);
+
+        AutocompleteSupportFragment autocompleteSupportFragment =
+                (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        assert autocompleteSupportFragment != null;
+        autocompleteSupportFragment.setTypeFilter(TypeFilter.ESTABLISHMENT);
+
+        autocompleteSupportFragment.setLocationBias(RectangularBounds.newInstance(
+                new LatLng(-33.990490, 151.184363),
+                new LatLng(-33.858754, 151.229596)
+        ));
+
+        autocompleteSupportFragment.setCountries("US");
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS));
+
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                // add place.getAddress() to database (single out city or town to map to user's current locations)
+                Log.d(TAG, "onPlaceSelected: " + place.getAddress());
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+                Log.d(TAG, "onError: " + status);
+            }
+        });
+    }
+
+    private void PromptUserForGalleryImage() {
+        // This code is for choosing a photo from the user's photo gallery
+        ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Glide.with(AddActivityActivity.this)
+                                .load(result.getData().getData())
+                                .override(500, 500)
+                                .circleCrop()
+                                .into(binding.imageView);
+                    }
+                });
+
+        binding.addPhotoBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            mGetContent.launch(intent);
         });
     }
 
