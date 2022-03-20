@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/custom_button.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/custom_input.xml" value="0.1" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/gradient_background.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_format_align_justify_24.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.161" />
@@ -25,7 +26,7 @@
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/fragment_register.xml" value="0.24427083333333333" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/my_activities_la.xml" value="0.33" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/my_activities_list.xml" value="0.33" />
-        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/my_activities_list_adapter.xml" value="0.21770833333333334" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/my_activities_list_adapter.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24427083333333333" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/menu/main_menu.xml" value="0.33" />
       </map>

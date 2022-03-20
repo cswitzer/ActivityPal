@@ -2,7 +2,7 @@ package com.example.activitypal.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -61,12 +61,12 @@ public class APICallHandler {
         MakeRequest(context, userJson, updatedURL);
     }
 
-    public static void HandleActivityAdding(Context context, String name) {
+    public static void HandleActivityAdding(Context context, String name, String base64ImageString) {
         type = "CreateActivity";
         InitVolleyAndMoshi(context);
         JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
         // set token so that users are authenticated before adding an activity
-        Activity userActivity = new Activity(name);
+        Activity userActivity = new Activity(name, base64ImageString);
         userActivity.setToken(SharedPrefsHandler.GetUserToken(context));
         String activityJson = adapter.toJson(userActivity);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");

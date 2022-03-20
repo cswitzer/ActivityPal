@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                String city = addresses.get(0).getLocality();
-                Log.d(TAG, "onLocationResult: " + city);
+                // String city = addresses.get(0).getLocality();
+                // Log.d(TAG, "onLocationResult: " + city);
             }
         }
     };

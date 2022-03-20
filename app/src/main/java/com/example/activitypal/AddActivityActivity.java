@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
 import com.example.activitypal.databinding.ActivityAddActivityBinding;
+import com.example.activitypal.utils.APICallHandler;
 import com.example.activitypal.utils.DatePickerFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,10 +36,12 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -128,8 +131,14 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             SimpleDateFormat activityDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
             // get all data to be sent to the server
+            // Convert image bitmap to base64 string to be stored in the database
             binding.imageView.setDrawingCacheEnabled(true);
             Bitmap bitmap = binding.imageView.getDrawingCache();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+            String encodedImgByteArray = Base64.getEncoder().encodeToString(imageByteArray);
+
             String activityName = binding.activityName.getText().toString();
             Date activityDate = new Date();
             try {
@@ -140,7 +149,7 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             String startTime = binding.startTime.getText().toString();
             String endTime = binding.endingTime.getText().toString();
             String location = binding.autocompleteFragment.toString();
-            Log.d(TAG, "onCreate: Activity will commence at " + startTime);
+            APICallHandler.HandleActivityAdding(AddActivityActivity.this, activityName, encodedImgByteArray);
         });
     }
 
