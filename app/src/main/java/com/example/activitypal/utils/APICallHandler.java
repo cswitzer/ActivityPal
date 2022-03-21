@@ -2,7 +2,6 @@ package com.example.activitypal.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.activitypal.AddActivityActivity;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
 import com.example.activitypal.models.Activity;
@@ -20,6 +20,8 @@ import com.squareup.moshi.Moshi;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class APICallHandler {
     private static final String TAG = "APICallHandler";
@@ -36,7 +38,6 @@ public class APICallHandler {
         StringBuilder updatedURL = new StringBuilder(baseURL).append("users/register");
         // success will be made true if this succeeds
         MakeRequest(context, userJson, updatedURL);
-
     }
 
     public static void HandleLogin(Context context, String email, String password) {

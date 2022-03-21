@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.activitypal.databinding.ActivityAddActivityBinding;
 import com.example.activitypal.utils.APICallHandler;
 import com.example.activitypal.utils.DatePickerFragment;
+import com.example.activitypal.utils.SharedPrefsHandler;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -127,6 +128,7 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
         });
 
         binding.addActivityBtn.setOnClickListener(view -> {
+            // SharedPrefsHandler.ClearUserPref(AddActivityActivity.this);
             // format all time data
             SimpleDateFormat activityDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
