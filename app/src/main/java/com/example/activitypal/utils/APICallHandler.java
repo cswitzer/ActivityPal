@@ -50,6 +50,7 @@ public class APICallHandler {
     }
 
     public static void HandleLogout(Context context, String email, String password) {
+        SharedPrefsHandler.ClearUserPref(context);
         type = "Logout";
         InitVolleyAndMoshi(context);
         JsonAdapter<User> adapter = moshi.adapter(User.class);
@@ -91,13 +92,14 @@ public class APICallHandler {
                             } else if (response.getString("status").equals("AApproved")) {
                                 Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                                Log.d(TAG, "MakeRequest: Failed");
-                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }, error -> {
+                // make sure activities' page only shows if login attempt is successful
+                if (type.equals("Login")) {
+                    SharedPrefsHandler.SaveUserCred(context, "", "");
+                }
                 Toast.makeText(context, "There was an error", Toast.LENGTH_LONG).show();
             });
         } catch (JSONException e) {

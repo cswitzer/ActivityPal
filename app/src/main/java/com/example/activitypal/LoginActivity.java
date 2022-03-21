@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         // don't make user login again if they already have
         Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(LoginActivity.this);
         if (!credPair.t.equals("") && !credPair.u.equals("")) {
+            Log.d(TAG, "onCreate: " + credPair.t + " " + credPair.u);
             // TODO: The user is logged in, so direct them to the MainActivity
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
