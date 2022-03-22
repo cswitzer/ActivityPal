@@ -37,4 +37,6 @@
     <string name="please_add_an_activity">Please Add An Activity</string>
     <string name="end_time">End Time</string>
     <string name="submit">Submit</string>
+    <string name="Jackfrost" />
+    <string name="username">Username</string>
 </resources>

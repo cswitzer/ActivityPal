@@ -1,6 +1,7 @@
 package com.example.activitypal.models;
 
 public class User {
+    private String username;
     private String email;
     private String password;
     private String token;
@@ -30,4 +31,12 @@ public class User {
     public String getToken() { return token; }
 
     public void setToken(String token) { this.token = token; }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

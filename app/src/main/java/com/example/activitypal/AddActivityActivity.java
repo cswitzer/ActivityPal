@@ -133,7 +133,8 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             SimpleDateFormat activityDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
             // get all data to be sent to the server
-            // Convert image bitmap to base64 string to be stored in the database
+            String activityName = binding.activityName.getText().toString();
+
             binding.imageView.setDrawingCacheEnabled(true);
             Bitmap bitmap = binding.imageView.getDrawingCache();
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -141,17 +142,12 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             byte[] imageByteArray = byteArrayOutputStream.toByteArray();
             String encodedImgByteArray = Base64.getEncoder().encodeToString(imageByteArray);
 
-            String activityName = binding.activityName.getText().toString();
-            Date activityDate = new Date();
-            try {
-                activityDate = activityDateFormatter.parse(binding.textDate.getText().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            String activityDate = binding.textDate.getText().toString();
             String startTime = binding.startTime.getText().toString();
             String endTime = binding.endingTime.getText().toString();
-            String location = binding.autocompleteFragment.toString();
-            APICallHandler.HandleActivityAdding(AddActivityActivity.this, activityName, encodedImgByteArray);
+            String address = binding.autocompleteFragment.toString();
+            APICallHandler.HandleActivityAdding(AddActivityActivity.this, activityName, encodedImgByteArray,
+                    activityDate, startTime, endTime, address);
         });
     }
 

@@ -49,16 +49,16 @@
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="12dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
             android:ems="10"
             android:hint="@string/email"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,5 +74,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn"
             app:layout_constraintVertical_bias="0.65" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

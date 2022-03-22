@@ -21,9 +21,10 @@ public class RegisterActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         binding.regButton.setOnClickListener(view -> {
             // NEVER TRUST THE USER!!! VALIDATE AND SANITIZE USER INPUT YOU MADMAN!!!
+            String username = binding.username.getText().toString();
             String email = binding.email.getText().toString().trim();
             String password = binding.password.getText().toString();
-            APICallHandler.HandleRegistration(RegisterActivity.this, email, password);
+            APICallHandler.HandleRegistration(RegisterActivity.this, username, email, password);
         });
     }
 }

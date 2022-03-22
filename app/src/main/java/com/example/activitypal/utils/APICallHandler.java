@@ -10,7 +10,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.activitypal.AddActivityActivity;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
 import com.example.activitypal.models.Activity;
@@ -21,8 +20,6 @@ import com.squareup.moshi.Moshi;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 public class APICallHandler {
     private static final String TAG = "APICallHandler";
     private static String baseURL = "http://10.0.2.2:3000/";
@@ -30,11 +27,13 @@ public class APICallHandler {
     private static Moshi moshi;
     private static String type;
 
-    public static void HandleRegistration(Context context, String email, String password) {
+    public static void HandleRegistration(Context context, String username, String email, String password) {
         type = "Register";
         InitVolleyAndMoshi(context);
         JsonAdapter<User> adapter = moshi.adapter(User.class);
-        String userJson = adapter.toJson(new User(email, password));
+        User userToRegister = new User(email, password);
+        userToRegister.setUsername(username);
+        String userJson = adapter.toJson(userToRegister);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("users/register");
         // success will be made true if this succeeds
         MakeRequest(context, userJson, updatedURL);
@@ -50,7 +49,6 @@ public class APICallHandler {
     }
 
     public static void HandleLogout(Context context, String email, String password) {
-        SharedPrefsHandler.ClearUserPref(context);
         type = "Logout";
         InitVolleyAndMoshi(context);
         JsonAdapter<User> adapter = moshi.adapter(User.class);
@@ -63,12 +61,13 @@ public class APICallHandler {
         MakeRequest(context, userJson, updatedURL);
     }
 
-    public static void HandleActivityAdding(Context context, String name, String base64ImageString) {
+    public static void HandleActivityAdding(Context context, String name, String base64ImageString, String date,
+                                            String startTime, String endTime, String address) {
         type = "CreateActivity";
         InitVolleyAndMoshi(context);
         JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
         // set token so that users are authenticated before adding an activity
-        Activity userActivity = new Activity(name, base64ImageString);
+        Activity userActivity = new Activity(name, base64ImageString, date, startTime, endTime, address);
         userActivity.setToken(SharedPrefsHandler.GetUserToken(context));
         String activityJson = adapter.toJson(userActivity);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
@@ -80,10 +79,10 @@ public class APICallHandler {
         moshi = new Moshi.Builder().build();
     }
 
-    private static void MakeRequest(Context context, String userJson, StringBuilder updatedURL) {
+    private static void MakeRequest(Context context, String json, StringBuilder updatedURL) {
         JsonObjectRequest postRequest = null;
         try {
-            postRequest = new JsonObjectRequest(Request.Method.POST, updatedURL.toString(), new JSONObject(userJson),
+            postRequest = new JsonObjectRequest(Request.Method.POST, updatedURL.toString(), new JSONObject(json),
                     response -> {
                         try {
                             if (response.getString("status").equals("Approved")) {
@@ -119,6 +118,7 @@ public class APICallHandler {
                 break;
             case "Login":
                 SharedPrefsHandler.SaveUserToken(context, token);
+                Log.d(TAG, "HandleResponse: " + token);
                 context.startActivity(new Intent(context, MainActivity.class));
                 Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
                 break;
