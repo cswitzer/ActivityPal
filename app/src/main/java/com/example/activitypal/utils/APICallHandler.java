@@ -74,11 +74,17 @@ public class APICallHandler {
         MakeRequest(context, activityJson, updatedURL);
     }
 
+    public static void HandleActivityFetching(Context context) {
+        type = "FetchMyActivities";
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/me");
+    }
+
     private static void InitVolleyAndMoshi(Context context) {
         rq = Volley.newRequestQueue(context);
         moshi = new Moshi.Builder().build();
     }
 
+    // for storing purposes
     private static void MakeRequest(Context context, String json, StringBuilder updatedURL) {
         JsonObjectRequest postRequest = null;
         try {
@@ -136,6 +142,15 @@ public class APICallHandler {
             case "ViewActivity":
                 Log.d(TAG, "HandleResponse: View Activity");
                 break;
+            case "FetchMyActivities":
+                Log.d(TAG, "HandleResponse: Fetch My Activities");
+                break;
         }
+    }
+
+    // for getting purposes
+    public static String[] MakeRequestGet(Context context) {
+        // since all data in the database are strings, just retrieve those
+        return new String[]{"Bob", "Sue"};
     }
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.activitypal.R;
 
 public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesListAdapter.MyViewHolder> {
-
+    // create string data arrays for photo, activity names, usernames, locations.
     String[] data;
 
     public MyActivitiesListAdapter(String[] data) {

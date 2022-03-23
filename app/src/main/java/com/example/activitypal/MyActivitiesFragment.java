@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.activitypal.utils.APICallHandler;
 import com.example.activitypal.utils.MyActivitiesListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,13 +25,14 @@ import java.util.Arrays;
 
 public class MyActivitiesFragment extends Fragment {
     private static final String TAG = "MyActivitiesFragment";
-    String[] data = {"Bob", "Sue", "John", "Jane"};
+    String[] data = {};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_my_activities, container, false);
 
+        SetData();
         RecyclerView recyclerView = view.findViewById(R.id.my_activities_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new MyActivitiesListAdapter(data));
@@ -48,5 +50,10 @@ public class MyActivitiesFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void SetData() {
+        // make api call
+        data = APICallHandler.MakeRequestGet(getContext());
     }
 }
