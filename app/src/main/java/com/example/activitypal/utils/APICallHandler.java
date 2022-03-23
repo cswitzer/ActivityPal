@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
@@ -19,6 +23,9 @@ import com.squareup.moshi.Moshi;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class APICallHandler {
     private static final String TAG = "APICallHandler";
@@ -74,46 +81,23 @@ public class APICallHandler {
         MakeRequest(context, activityJson, updatedURL);
     }
 
-    public static void HandleActivityFetching(Context context) {
+    public static String[] HandleActivityFetching(Context context, String email, String password) throws JSONException {
         type = "FetchMyActivities";
+        String[] data = {};
+        InitVolleyAndMoshi(context);
+        // sending the user json here for simplicity
+        JsonAdapter<User> adapter = moshi.adapter(User.class);
+        User currentUser = new User(email, password);
+        currentUser.setToken(SharedPrefsHandler.GetUserToken(context));
+        String userJson = adapter.toJson(currentUser);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/me");
+        data = MakeRequestGet(context, updatedURL);
+        return data;
     }
 
     private static void InitVolleyAndMoshi(Context context) {
         rq = Volley.newRequestQueue(context);
         moshi = new Moshi.Builder().build();
-    }
-
-    // for storing purposes
-    private static void MakeRequest(Context context, String json, StringBuilder updatedURL) {
-        JsonObjectRequest postRequest = null;
-        try {
-            postRequest = new JsonObjectRequest(Request.Method.POST, updatedURL.toString(), new JSONObject(json),
-                    response -> {
-                        try {
-                            if (response.getString("status").equals("Approved")) {
-                                String token = response.getString("token");
-                                HandleResponse(context, type, token);
-                            } else if (response.getString("status").equals("AApproved")) {
-                                Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }, error -> {
-                // make sure activities' page only shows if login attempt is successful
-                if (type.equals("Login")) {
-                    SharedPrefsHandler.SaveUserCred(context, "", "");
-                }
-                Toast.makeText(context, "There was an error", Toast.LENGTH_LONG).show();
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        assert postRequest != null;
-        postRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        rq.add(postRequest);
     }
 
     private static void HandleResponse(Context context, String type, String token) {
@@ -148,9 +132,57 @@ public class APICallHandler {
         }
     }
 
+    // for storing purposes
+    private static void MakeRequest(Context context, String json, StringBuilder updatedURL) {
+        JsonObjectRequest postRequest = null;
+        try {
+            postRequest = new JsonObjectRequest(Request.Method.POST, updatedURL.toString(), new JSONObject(json),
+                    response -> {
+                        try {
+                            if (response.getString("status").equals("Approved")) {
+                                String token = response.getString("token");
+                                HandleResponse(context, type, token);
+                            } else if (response.getString("status").equals("AApproved")) {
+                                Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
+                // make sure activities' page only shows if login attempt is successful
+                if (type.equals("Login")) {
+                    SharedPrefsHandler.SaveUserCred(context, "", "");
+                }
+                Toast.makeText(context, "There was an error", Toast.LENGTH_LONG).show();
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        assert postRequest != null;
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.add(postRequest);
+    }
+
     // for getting purposes
-    public static String[] MakeRequestGet(Context context) {
-        // since all data in the database are strings, just retrieve those
-        return new String[]{"Bob", "Sue"};
+    public static String[] MakeRequestGet(Context context, StringBuilder updatedURL) {
+        String[] result = new String[20];
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, updatedURL.toString(), null,
+                response -> {
+                    Log.d(TAG, "MakeRequestGet: " + response);
+                }, error -> {
+                    Log.d(TAG, "MakeRequestGet: " + error);
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", SharedPrefsHandler.GetUserToken(context));
+                return params;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.add(jsonObjectRequest);
+        return result;
     }
 }
