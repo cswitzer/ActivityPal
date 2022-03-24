@@ -1,5 +1,6 @@
 package com.example.activitypal.utils;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activitypal.R;
+import com.example.activitypal.models.Activity;
+
+import java.util.ArrayList;
 
 public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesListAdapter.MyViewHolder> {
     // create string data arrays for photo, activity names, usernames, locations.
-    String[] data;
+    ArrayList<Activity> data;
 
-    public MyActivitiesListAdapter(String[] data) {
+    public MyActivitiesListAdapter(ArrayList<Activity> data) {
         this.data = data;
     }
 
@@ -28,12 +32,12 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // TODO: bind necessary data to each view in the recycler view
-        holder.activityElementName.setText(data[position]);
+        holder.activityElementName.setText(data.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

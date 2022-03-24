@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/add_my_activity"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +27,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/my_activities_rv"
         app:layout_constraintVertical_bias="0.943"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/add_my_activity" />
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

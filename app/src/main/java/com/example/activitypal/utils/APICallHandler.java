@@ -9,10 +9,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.activitypal.LoginActivity;
 import com.example.activitypal.MainActivity;
@@ -21,9 +18,11 @@ import com.example.activitypal.models.User;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,20 +78,6 @@ public class APICallHandler {
         String activityJson = adapter.toJson(userActivity);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
         MakeRequest(context, activityJson, updatedURL);
-    }
-
-    public static String[] HandleActivityFetching(Context context, String email, String password) throws JSONException {
-        type = "FetchMyActivities";
-        String[] data = {};
-        InitVolleyAndMoshi(context);
-        // sending the user json here for simplicity
-        JsonAdapter<User> adapter = moshi.adapter(User.class);
-        User currentUser = new User(email, password);
-        currentUser.setToken(SharedPrefsHandler.GetUserToken(context));
-        String userJson = adapter.toJson(currentUser);
-        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/me");
-        data = MakeRequestGet(context, updatedURL);
-        return data;
     }
 
     private static void InitVolleyAndMoshi(Context context) {
@@ -164,12 +149,52 @@ public class APICallHandler {
         rq.add(postRequest);
     }
 
-    // for getting purposes
-    public static String[] MakeRequestGet(Context context, StringBuilder updatedURL) {
-        String[] result = new String[20];
+    public static void HandleActivityFetching(Context context, String email, String password,
+                                                             final VolleyCallback volleyCallback) {
+        type = "FetchMyActivities";
+        final ArrayList<Activity> data = new ArrayList<>();
+        InitVolleyAndMoshi(context);
+        // sending the user json here for simplicity
+        JsonAdapter<User> adapter = moshi.adapter(User.class);
+        User currentUser = new User(email, password);
+        currentUser.setToken(SharedPrefsHandler.GetUserToken(context));
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/me");
+        MakeRequestGet(context, updatedURL, new VolleyCallback() {
+            @Override
+            public void onSuccess(ArrayList<Activity> result) {
+                data.addAll((ArrayList<Activity>) result);
+                volleyCallback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ArrayList<Activity> result) {
+                Log.d(TAG, "onError: Something went wrong");
+            }
+        });
+    }
+
+    // this method handles all get requests!
+    public static void MakeRequestGet(Context context, StringBuilder updatedURL, final VolleyCallback volleyCallback) {
+        ArrayList<Activity> result = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, updatedURL.toString(), null,
                 response -> {
-                    Log.d(TAG, "MakeRequestGet: " + response);
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("activities");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String name = jsonObject.getString("name");
+                            String base64ImageString = jsonObject.getString("base64ImageString");
+                            String date = jsonObject.getString("date");
+                            String startTime = jsonObject.getString("startTime");
+                            String endTime = jsonObject.getString("endTime");
+                            String address = jsonObject.getString("address");
+                            Activity activity = new Activity(name, base64ImageString, date, startTime, endTime, address);
+                            result.add(activity);
+                        }
+                        volleyCallback.onSuccess(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }, error -> {
                     Log.d(TAG, "MakeRequestGet: " + error);
                 }) {
@@ -183,6 +208,5 @@ public class APICallHandler {
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonObjectRequest);
-        return result;
     }
 }
