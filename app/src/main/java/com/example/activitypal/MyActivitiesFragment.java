@@ -1,22 +1,17 @@
 package com.example.activitypal;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.activitypal.models.Activity;
 import com.example.activitypal.utils.APICallHandler;
@@ -26,10 +21,7 @@ import com.example.activitypal.utils.SharedPrefsHandler;
 import com.example.activitypal.utils.VolleyCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MyActivitiesFragment extends Fragment {
     private static final String TAG = "MyActivitiesFragment";
@@ -60,7 +52,7 @@ public class MyActivitiesFragment extends Fragment {
 
     public void SetData(Pair<String, String> credPair, View view) {
         // make api call
-        APICallHandler.HandleActivityFetching(getContext(), credPair.t, credPair.u, new VolleyCallback() {
+        APICallHandler.FetchMyActivities(getContext(), new VolleyCallback() {
             @Override
             public void onSuccess(ArrayList<Activity> result) {
                 SetData(result, view);

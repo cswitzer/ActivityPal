@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
 
     public void SetData(Pair<String, String> credPair, View view) {
         // TODO: Fetch activities in the user's area: not activities belonging to the user
-        APICallHandler.HandleActivityFetching(getContext(), credPair.t, credPair.u, new VolleyCallback() {
+        APICallHandler.FetchNearbyActivities(getContext(), new VolleyCallback() {
             @Override
             public void onSuccess(ArrayList<Activity> result) {
                 SetData(result, view);

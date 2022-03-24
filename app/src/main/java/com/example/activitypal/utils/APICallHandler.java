@@ -74,6 +74,7 @@ public class APICallHandler {
         JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
         // set token so that users are authenticated before adding an activity
         Activity userActivity = new Activity(name, base64ImageString, date, startTime, endTime, address);
+        userActivity.setCity(address.split(", ")[1]);
         userActivity.setToken(SharedPrefsHandler.GetUserToken(context));
         String activityJson = adapter.toJson(userActivity);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
@@ -101,18 +102,6 @@ public class APICallHandler {
                 SharedPrefsHandler.ClearUserPref(context);
                 context.startActivity(new Intent(context, LoginActivity.class));
                 Toast.makeText(context, "Signing out...", Toast.LENGTH_SHORT).show();
-                break;
-            case "CreateActivity":
-                Log.d(TAG, "HandleResponse: Create Activity");
-                break;
-            case "DeleteActivity":
-                Log.d(TAG, "HandleResponse: Delete Activity");
-                break;
-            case "ViewActivity":
-                Log.d(TAG, "HandleResponse: View Activity");
-                break;
-            case "FetchMyActivities":
-                Log.d(TAG, "HandleResponse: Fetch My Activities");
                 break;
         }
     }
@@ -149,26 +138,39 @@ public class APICallHandler {
         rq.add(postRequest);
     }
 
-    public static void HandleActivityFetching(Context context, String email, String password,
-                                                             final VolleyCallback volleyCallback) {
+    public static void FetchMyActivities(Context context, final VolleyCallback volleyCallback) {
         type = "FetchMyActivities";
         final ArrayList<Activity> data = new ArrayList<>();
         InitVolleyAndMoshi(context);
-        // sending the user json here for simplicity
-        JsonAdapter<User> adapter = moshi.adapter(User.class);
-        User currentUser = new User(email, password);
-        currentUser.setToken(SharedPrefsHandler.GetUserToken(context));
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/me");
         MakeRequestGet(context, updatedURL, new VolleyCallback() {
             @Override
             public void onSuccess(ArrayList<Activity> result) {
-                data.addAll((ArrayList<Activity>) result);
+                data.addAll(result);
                 volleyCallback.onSuccess(data);
             }
 
             @Override
             public void onError(ArrayList<Activity> result) {
                 Log.d(TAG, "onError: Something went wrong");
+            }
+        });
+    }
+
+    public static void FetchNearbyActivities(Context context, final VolleyCallback volleyCallback) {
+        final ArrayList<Activity> data = new ArrayList<>();
+        InitVolleyAndMoshi(context);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
+        MakeRequestGet(context, updatedURL, new VolleyCallback() {
+            @Override
+            public void onSuccess(ArrayList<Activity> result) {
+                data.addAll(result);
+                volleyCallback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ArrayList<Activity> result) {
+
             }
         });
     }
@@ -202,6 +204,7 @@ public class APICallHandler {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("token", SharedPrefsHandler.GetUserToken(context));
+                params.put("city", "Rexburg");
                 return params;
             }
         };

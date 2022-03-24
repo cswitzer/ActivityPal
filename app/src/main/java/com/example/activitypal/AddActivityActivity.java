@@ -52,6 +52,7 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
     ActivityAddActivityBinding binding;
 
     Calendar calendar;
+    private String address;
     private int startHour;
     private int endHour;
     private int startMinute;
@@ -145,7 +146,7 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             String activityDate = binding.textDate.getText().toString();
             String startTime = binding.startTime.getText().toString();
             String endTime = binding.endingTime.getText().toString();
-            String address = binding.autocompleteFragment.toString();
+            // address already set in InitMapsAutoCompleteFrag()
             APICallHandler.HandleActivityAdding(AddActivityActivity.this, activityName, encodedImgByteArray,
                     activityDate, startTime, endTime, address);
         });
@@ -175,6 +176,7 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
             public void onPlaceSelected(@NonNull Place place) {
                 // add place.getAddress() to database (single out city or town to map to user's current locations)
                 Log.d(TAG, "onPlaceSelected: " + place.getAddress());
+                SetPlaceAddress(place.getAddress());
             }
 
             @Override
@@ -182,6 +184,10 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
                 Log.d(TAG, "onError: " + status);
             }
         });
+    }
+
+    private void SetPlaceAddress(String address) {
+        this.address = address;
     }
 
     private void PromptUserForGalleryImage() {

@@ -10,6 +10,7 @@ public class Activity {
     private String startTime;
     private String endTime;
     private String address;
+    private String city;
     private List<String> participants;
     private String token;
 
@@ -86,5 +87,13 @@ public class Activity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
