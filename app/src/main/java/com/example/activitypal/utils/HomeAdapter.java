@@ -13,25 +13,20 @@ import com.example.activitypal.models.Activity;
 
 import java.util.ArrayList;
 
-public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesListAdapter.MyViewHolder> {
-    // create string data arrays for photo, activity names, usernames, locations.
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
     ArrayList<Activity> data;
 
-    public MyActivitiesListAdapter(ArrayList<Activity> data) {
-        this.data = data;
-    }
+    public HomeAdapter(ArrayList<Activity> data) { this.data = data; }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // in MainActivity, inflate the parent recyclerview with the cardviews in my_activities_list_adapter
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_activities_list_adapter, parent, false));
+        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_list_adapter, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // TODO: bind necessary data to each view in the recycler view
-        holder.activityElementName.setText(data.get(position).getName());
+        holder.activityName.setText(data.get(position).getName());
     }
 
     @Override
@@ -40,12 +35,11 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        // Add a photo, name, timeslot, and creator
-        TextView activityElementName;
+        TextView activityName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            activityElementName = itemView.findViewById(R.id.activity_el_name);
+            activityName = itemView.findViewById(R.id.home_activity_name);
         }
     }
 }
