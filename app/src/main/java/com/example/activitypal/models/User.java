@@ -1,6 +1,7 @@
 package com.example.activitypal.models;
 
 public class User {
+    private String _id;
     private String username;
     private String email;
     private String password;
@@ -38,5 +39,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }
