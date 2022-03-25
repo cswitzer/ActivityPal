@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Activity {
+    private String _id;
     private String name;
     private String base64ImageString;
     private String date;
@@ -95,5 +96,13 @@ public class Activity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

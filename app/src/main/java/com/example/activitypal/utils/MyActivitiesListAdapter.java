@@ -38,15 +38,17 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
         // TODO: bind necessary data to each view in the recycler view
         holder.activityElementName.setText(data.get(position).getName());
         holder.activityElementLocation.setText(data.get(position).getAddress());
-
+        holder.activityStartTime.setText(data.get(position).getStartTime());
+        holder.activityEndTime.setText(data.get(position).getEndTime());
+        holder.activityId.setText(data.get(position).get_id());
 
         // convert base64 string to bitmap
         byte[] decodedStringImg = Base64.getDecoder().decode(data.get(position).getBase64ImageString());
         Bitmap decodedByteImg = BitmapFactory.decodeByteArray(decodedStringImg, 0, decodedStringImg.length);
         Glide.with(holder.itemView.getContext())
                 .load(decodedByteImg)
+                .override(250, 250)
                 .circleCrop()
-                .override(150, 150)
                 .into(holder.activityElementPhoto);
     }
 
@@ -59,6 +61,9 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
         // Add a photo, name, timeslot, and creator
         TextView activityElementName;
         TextView activityElementLocation;
+        TextView activityStartTime;
+        TextView activityEndTime;
+        TextView activityId;
         ImageView activityElementPhoto;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -66,6 +71,9 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
             activityElementName = itemView.findViewById(R.id.activity_el_name);
             activityElementPhoto = (ImageView) itemView.findViewById(R.id.activity_el_photo);
             activityElementLocation = itemView.findViewById(R.id.activity_el_location);
+            activityStartTime = itemView.findViewById(R.id.my_activity_start);
+            activityEndTime = itemView.findViewById(R.id.my_activity_end);
+            activityId = itemView.findViewById(R.id.my_activity_id);
         }
     }
 }

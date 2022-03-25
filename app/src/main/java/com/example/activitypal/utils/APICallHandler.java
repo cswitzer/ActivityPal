@@ -86,26 +86,6 @@ public class APICallHandler {
         moshi = new Moshi.Builder().build();
     }
 
-    private static void HandleResponse(Context context, String type, String token) {
-        switch (type) {
-            case "Register":
-                context.startActivity(new Intent(context, LoginActivity.class));
-                Toast.makeText(context, "Registering...", Toast.LENGTH_SHORT).show();
-                break;
-            case "Login":
-                SharedPrefsHandler.SaveUserToken(context, token);
-                Log.d(TAG, "HandleResponse: " + token);
-                context.startActivity(new Intent(context, MainActivity.class));
-                Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
-                break;
-            case "Logout":
-                SharedPrefsHandler.ClearUserPref(context);
-                context.startActivity(new Intent(context, LoginActivity.class));
-                Toast.makeText(context, "Signing out...", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
     // for storing purposes
     private static void MakeRequest(Context context, String json, StringBuilder updatedURL) {
         JsonObjectRequest postRequest = null;
@@ -118,6 +98,8 @@ public class APICallHandler {
                                 HandleResponse(context, type, token);
                             } else if (response.getString("status").equals("AApproved")) {
                                 Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
+                                String token = response.getString("token");
+                                HandleResponse(context, type, token);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -136,6 +118,29 @@ public class APICallHandler {
         postRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(postRequest);
+    }
+
+    private static void HandleResponse(Context context, String type, String token) {
+        switch (type) {
+            case "Register":
+                context.startActivity(new Intent(context, LoginActivity.class));
+                Toast.makeText(context, "Registering...", Toast.LENGTH_SHORT).show();
+                break;
+            case "Login":
+                SharedPrefsHandler.SaveUserToken(context, token);
+                Log.d(TAG, "HandleResponse: " + token);
+                context.startActivity(new Intent(context, MainActivity.class));
+                Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
+                break;
+            case "Logout":
+                SharedPrefsHandler.ClearUserPref(context);
+                context.startActivity(new Intent(context, LoginActivity.class));
+                Toast.makeText(context, "Signing out...", Toast.LENGTH_SHORT).show();
+                break;
+            case "CreateActivity":
+                context.startActivity(new Intent(context, MainActivity.class));
+                break;
+        }
     }
 
     public static void FetchMyActivities(Context context, final VolleyCallback volleyCallback) {
@@ -191,6 +196,7 @@ public class APICallHandler {
                             String endTime = jsonObject.getString("endTime");
                             String address = jsonObject.getString("address");
                             Activity activity = new Activity(name, base64ImageString, date, startTime, endTime, address);
+                            activity.set_id(jsonObject.getString("_id"));
                             result.add(activity);
                         }
                         volleyCallback.onSuccess(result);
