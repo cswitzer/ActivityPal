@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.activitypal.models.Activity;
 import com.example.activitypal.utils.APICallHandler;
+import com.example.activitypal.utils.HomeAdapter;
 import com.example.activitypal.utils.MyActivitiesListAdapter;
 import com.example.activitypal.utils.Pair;
 import com.example.activitypal.utils.SharedPrefsHandler;
@@ -20,7 +21,7 @@ import com.example.activitypal.utils.VolleyCallback;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    private static final String TAG = "MyActivitiesFragment";
+    private static final String TAG = "HomeFragment";
     ArrayList<Activity> data = new ArrayList<>();
 
     @Override
@@ -55,6 +56,6 @@ public class HomeFragment extends Fragment {
         data.addAll(result);
         RecyclerView recyclerView = view.findViewById(R.id.home_activities_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyActivitiesListAdapter(data));
+        recyclerView.setAdapter(new HomeAdapter(data));
     }
 }

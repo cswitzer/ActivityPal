@@ -39,4 +39,6 @@
     <string name="submit">Submit</string>
     <string name="Jackfrost" />
     <string name="username">Username</string>
+    <string name="placeholder">placeholder</string>
+    <string name="textview2">TextView2</string>
 </resources>

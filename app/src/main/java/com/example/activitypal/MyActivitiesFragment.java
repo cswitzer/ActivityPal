@@ -31,7 +31,6 @@ public class MyActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_my_activities, container, false);
-
         Pair<String, String> credPair = SharedPrefsHandler.GetCredPref(getContext());
         SetData(credPair, view);
 
