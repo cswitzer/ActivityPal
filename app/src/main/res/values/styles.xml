@@ -16,4 +16,45 @@
         <item name="android:textColor">#555555</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="activity_name_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="activity_location_style">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="activity_start_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="time_dash_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="activity_end_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">100dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="image_style">
+        <item name="android:layout_width">115dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:contentDescription">@string/activity_photo</item>
+    </style>
 </resources>

@@ -20,9 +20,10 @@
 
             <ImageView
                 android:id="@+id/activity_el_photo"
-                android:layout_width="113dp"
-                android:layout_height="115dp"
-                android:contentDescription="@string/activity_photo"
+                style="@style/image_style"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/an_activity_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,65 +32,50 @@
 
             <TextView
                 android:id="@+id/activity_el_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:text="@string/placeholder"
-                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.186" />
+                app:layout_constraintVertical_bias="0.186"
+                style="@style/activity_name_style" />
 
             <TextView
                 android:id="@+id/activity_el_location"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:text="TextView"
-                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
-                app:layout_constraintTop_toBottomOf="@+id/activity_el_name" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_el_name"
+                style="@style/activity_location_style" />
 
             <TextView
                 android:id="@+id/my_activity_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:text="@string/start_time"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
                 app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
-                app:layout_constraintVertical_bias="0.47" />
+                app:layout_constraintVertical_bias="0.47"
+                style="@style/activity_start_style" />
 
             <TextView
                 android:id="@+id/dash_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/time_dash"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/my_activity_end"
                 app:layout_constraintHorizontal_bias="0.476"
                 app:layout_constraintStart_toEndOf="@+id/my_activity_start"
-                app:layout_constraintTop_toBottomOf="@+id/activity_el_location" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
+                style="@style/time_dash_style" />
 
             <TextView
                 android:id="@+id/my_activity_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="100dp"
                 android:text="@string/end_time"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_el_location" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
+                style="@style/activity_end_style" />
 
             <TextView
                 android:id="@+id/my_activity_id"
