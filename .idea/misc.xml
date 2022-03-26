@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/custom_btn_ripple.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/custom_button.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/custom_input.xml" value="0.1" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/edit_button.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/gradient_background.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_format_align_justify_24.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.161" />
@@ -12,6 +14,8 @@
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_email.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/ic_lock.xml" value="0.1" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/join_button.xml" value="0.161" />
+        <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/drawable/leave_button.xml" value="0.161" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_add_activity.xml" value="0.22" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_cardview_layout.xml" value="0.33" />
         <entry key="..\:/Users/Chase/AndroidStudioProjects/ActivityPal/app/src/main/res/layout/activity_login.xml" value="0.34646739130434784" />

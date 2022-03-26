@@ -46,4 +46,7 @@
     <string name="activity_location">activity_location</string>
     <string name="image_of_activity">image of activity</string>
     <string name="an_activity_image">An Activity Image</string>
+    <string name="join_btn_text">Join</string>
+    <string name="my_activities_location">my_activities_location</string>
+    <string name="edit_button">Edit</string>
 </resources>

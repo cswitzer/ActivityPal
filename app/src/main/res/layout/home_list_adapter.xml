@@ -28,7 +28,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/home_activity_image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.129" />
+                app:layout_constraintVertical_bias="0.13" />
 
             <ImageView
                 android:id="@+id/home_activity_image"
@@ -63,19 +63,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/home_activity_image"
                 app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/home_end"
-                style="@style/activity_end_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="112dp"
-                android:text="@string/end_time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.327" />
 
             <TextView
                 android:id="@+id/home_dash"
@@ -87,10 +75,22 @@
                 android:text="@string/time_dash"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/home_end"
-                app:layout_constraintHorizontal_bias="0.081"
+                app:layout_constraintHorizontal_bias="0.307"
                 app:layout_constraintStart_toEndOf="@+id/home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.327" />
+
+            <TextView
+                android:id="@+id/home_end"
+                style="@style/activity_end_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="108dp"
+                android:text="@string/end_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
+                app:layout_constraintVertical_bias="0.327" />
 
             <TextView
                 android:id="@+id/hidden_id"
@@ -103,6 +103,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/join_button"
+                style="@style/interact_buttons"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:background="@drawable/join_button"
+                android:text="@string/join_btn_text"
+                android:textColor="#424242"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.555"
+                app:layout_constraintStart_toEndOf="@+id/home_activity_location"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.421" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

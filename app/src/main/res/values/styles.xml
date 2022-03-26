@@ -17,6 +17,14 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="interact_buttons">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">#555555</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="activity_name_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
