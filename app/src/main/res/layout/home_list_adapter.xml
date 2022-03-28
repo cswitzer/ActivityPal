@@ -1,125 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_act_LL"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/home_cardview"
+    <LinearLayout
+        android:id="@+id/home_act_LL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/home_activity_name"
-                style="@style/activity_name_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/home_activity_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/home_activity_image"
-                android:layout_width="120dp"
-                android:layout_height="150dp"
-                android:contentDescription="@string/image_of_activity"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_launcher_foreground"
-                tools:ignore="ImageContrastCheck" />
+                <TextView
+                    android:id="@+id/home_activity_name"
+                    style="@style/activity_name_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/home_activity_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.13" />
 
-            <TextView
-                android:id="@+id/home_activity_location"
-                style="@style/activity_location_style"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/home_activity_image"
-                app:layout_constraintTop_toBottomOf="@+id/home_activity_name" />
+                <ImageView
+                    android:id="@+id/home_activity_image"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp"
+                    android:contentDescription="@string/image_of_activity"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_launcher_foreground"
+                    tools:ignore="ImageContrastCheck" />
 
-            <TextView
-                android:id="@+id/home_start"
-                style="@style/activity_start_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/start_time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/home_activity_image"
-                app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.327" />
+                <TextView
+                    android:id="@+id/home_activity_location"
+                    style="@style/activity_location_style"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/home_activity_image"
+                    app:layout_constraintTop_toBottomOf="@+id/home_activity_name" />
 
-            <TextView
-                android:id="@+id/home_dash"
-                style="@style/time_dash_style"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:text="@string/time_dash"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/home_end"
-                app:layout_constraintHorizontal_bias="0.307"
-                app:layout_constraintStart_toEndOf="@+id/home_start"
-                app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.327" />
+                <TextView
+                    android:id="@+id/home_start"
+                    style="@style/activity_start_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/start_time"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/home_activity_image"
+                    app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
+                    app:layout_constraintVertical_bias="0.327" />
 
-            <TextView
-                android:id="@+id/home_end"
-                style="@style/activity_end_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="108dp"
-                android:text="@string/end_time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
-                app:layout_constraintVertical_bias="0.327" />
+                <TextView
+                    android:id="@+id/home_dash"
+                    style="@style/time_dash_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/time_dash"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/home_end"
+                    app:layout_constraintHorizontal_bias="0.307"
+                    app:layout_constraintStart_toEndOf="@+id/home_start"
+                    app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
+                    app:layout_constraintVertical_bias="0.327" />
 
-            <TextView
-                android:id="@+id/home_hidden_id"
-                android:layout_width="177dp"
-                android:layout_height="3dp"
-                android:textSize="2sp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/home_end"
+                    style="@style/activity_end_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="108dp"
+                    android:text="@string/end_time"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_activity_location"
+                    app:layout_constraintVertical_bias="0.327" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/join_button"
-                style="@style/interact_buttons"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:background="@drawable/join_button"
-                android:text="@string/join_btn_text"
-                android:textColor="#424242"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.555"
-                app:layout_constraintStart_toEndOf="@+id/home_activity_location"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.421" />
+                <TextView
+                    android:id="@+id/home_hidden_id"
+                    android:layout_width="177dp"
+                    android:layout_height="3dp"
+                    android:textSize="2sp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/join_button"
+                    style="@style/interact_buttons"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/join_button"
+                    android:text="@string/join_btn_text"
+                    android:textColor="#424242"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.555"
+                    app:layout_constraintStart_toEndOf="@+id/home_activity_location"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.421" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</layout>

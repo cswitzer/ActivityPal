@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.activitypal.R;
+import com.example.activitypal.databinding.FragmentHomeBinding;
+import com.example.activitypal.databinding.MyActivitiesListAdapterBinding;
 import com.example.activitypal.models.Activity;
 
 import java.util.ArrayList;
@@ -34,17 +37,18 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // in MainActivity, inflate the parent recyclerview with the cardviews in my_activities_list_adapter
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_activities_list_adapter, parent, false));
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        MyActivitiesListAdapterBinding binding = MyActivitiesListAdapterBinding.inflate(inflater, parent, false);
+        return new MyViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // TODO: bind necessary data to each view in the recycler view
-        holder.activityElementName.setText(data.get(position).getName());
-        holder.activityElementLocation.setText(data.get(position).getAddress());
-        holder.activityStartTime.setText(data.get(position).getStartTime());
-        holder.activityEndTime.setText(data.get(position).getEndTime());
-        holder.activityId.setText(data.get(position).get_id());
+        holder.binding.activityElName.setText(data.get(position).getName());
+        holder.binding.activityElLocation.setText(data.get(position).getAddress());
+        holder.binding.myActivityStart.setText(data.get(position).getStartTime());
+        holder.binding.myActivityEnd.setText(data.get(position).getEndTime());
+        holder.binding.myActivityId.setText(data.get(position).get_id());
 
         // convert base64 string to bitmap
         byte[] decodedStringImg = Base64.getDecoder().decode(data.get(position).getBase64ImageString());
@@ -53,10 +57,10 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
                 .load(decodedByteImg)
                 .override(250, 250)
                 .circleCrop()
-                .into(holder.activityElementPhoto);
+                .into(holder.binding.activityElPhoto);
 
-        holder.editButton.setOnClickListener(view -> {
-            Log.d(TAG, "onBindViewHolder: " + holder.activityId.getText().toString());
+        holder.binding.editButton.setOnClickListener(view -> {
+            Log.d(TAG, "onBindViewHolder: " + holder.binding.myActivityId.getText().toString());
         });
     }
 
@@ -66,24 +70,11 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        // Add a photo, name, timeslot, and creator
-        TextView activityElementName;
-        TextView activityElementLocation;
-        TextView activityStartTime;
-        TextView activityEndTime;
-        TextView activityId;
-        ImageView activityElementPhoto;
-        Button editButton;
+        MyActivitiesListAdapterBinding binding;
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            activityElementName = itemView.findViewById(R.id.activity_el_name);
-            activityElementPhoto = (ImageView) itemView.findViewById(R.id.activity_el_photo);
-            activityElementLocation = itemView.findViewById(R.id.activity_el_location);
-            activityStartTime = itemView.findViewById(R.id.my_activity_start);
-            activityEndTime = itemView.findViewById(R.id.my_activity_end);
-            editButton = itemView.findViewById(R.id.edit_button);
-            activityId = itemView.findViewById(R.id.my_activity_id);
+        public MyViewHolder(@NonNull MyActivitiesListAdapterBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
