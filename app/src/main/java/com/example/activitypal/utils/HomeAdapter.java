@@ -2,9 +2,11 @@ package com.example.activitypal.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
+    private static final String TAG = "HomeAdapter";
     ArrayList<Activity> data;
 
     public HomeAdapter(ArrayList<Activity> data) { this.data = data; }
@@ -35,7 +38,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         holder.activityElementLocation.setText(data.get(position).getAddress());
         holder.activityStartTime.setText(data.get(position).getStartTime());
         holder.activityEndTime.setText(data.get(position).getEndTime());
-        // holder.activityId.setText(data.get(position).get_id());
+        holder.activityId.setText(data.get(position).get_id());
 
         // convert base64 string to bitmap
         byte[] decodedStringImg = Base64.getDecoder().decode(data.get(position).getBase64ImageString());
@@ -45,6 +48,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 .override(250, 250)
                 .circleCrop()
                 .into(holder.activityElementPhoto);
+
+        holder.joinButton.setOnClickListener(view -> {
+            Log.d(TAG, "onBindViewHolder: " + holder.activityId.getText().toString());
+        });
     }
 
     @Override
@@ -59,6 +66,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         TextView activityEndTime;
         TextView activityId;
         ImageView activityElementPhoto;
+        Button joinButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +75,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             activityElementLocation = itemView.findViewById(R.id.home_activity_location);
             activityStartTime = itemView.findViewById(R.id.home_start);
             activityEndTime = itemView.findViewById(R.id.home_end);
-            // activityId = itemView.findViewById(R.id.home_hidden_id);
+            joinButton = itemView.findViewById(R.id.join_button);
+            activityId = itemView.findViewById(R.id.home_hidden_id);
         }
     }
 }
