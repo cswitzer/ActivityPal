@@ -34,6 +34,8 @@ public class Activity {
         this.name = name;
     }
 
+    // setting a token here offers a convenient way to access the user interacting with the activity
+    // this will never be stored in the database
     public String getToken() {
         return token;
     }

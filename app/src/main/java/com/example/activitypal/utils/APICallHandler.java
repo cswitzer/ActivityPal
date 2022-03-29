@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,6 +34,11 @@ public class APICallHandler {
     private static RequestQueue rq;
     private static Moshi moshi;
     private static String type;
+
+    private static void InitVolleyAndMoshi(Context context) {
+        rq = Volley.newRequestQueue(context);
+        moshi = new Moshi.Builder().build();
+    }
 
     public static void HandleRegistration(Context context, String username, String email, String password) {
         type = "Register";
@@ -81,9 +88,19 @@ public class APICallHandler {
         MakeRequest(context, activityJson, updatedURL);
     }
 
-    private static void InitVolleyAndMoshi(Context context) {
-        rq = Volley.newRequestQueue(context);
-        moshi = new Moshi.Builder().build();
+    public static void HandleActivityJoin(Context context, String activityId) {
+        // activityId will be stored in the header
+        type = "JoinActivity";
+        InitVolleyAndMoshi(context);
+        JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
+        // initialize empty activity; we only care about sending the activityId to the server
+        Activity activity = new Activity("", "", "", "", "", "");
+        activity.set_id(activityId);
+        activity.setToken(SharedPrefsHandler.GetUserToken(context));
+
+        String activityJson = adapter.toJson(activity);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/join/" + activityId);
+        MakeRequest(context, activityJson, updatedURL);
     }
 
     // for storing purposes
@@ -100,16 +117,19 @@ public class APICallHandler {
                                 Toast.makeText(context, "Activity added", Toast.LENGTH_SHORT).show();
                                 String token = response.getString("token");
                                 HandleResponse(context, type, token);
+                            } else if (response.getString("status").equals("Joined Success")) {
+                                Log.d(TAG, "MakeRequest: Activity Successfully Joined");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }, error -> {
-                // make sure activities' page only shows if login attempt is successful
-                if (type.equals("Login")) {
-                    SharedPrefsHandler.SaveUserCred(context, "", "");
-                }
-                Toast.makeText(context, "There was an error", Toast.LENGTH_LONG).show();
+                        // make sure activities' page only shows if login attempt is successful
+                        if (type.equals("Login")) {
+                            SharedPrefsHandler.SaveUserCred(context, "", "");
+                        }
+                        // TODO: pass this to a function with param type for customized error messages
+                        Toast.makeText(context, "There was an error", Toast.LENGTH_LONG).show();
             });
         } catch (JSONException e) {
             e.printStackTrace();
@@ -180,7 +200,7 @@ public class APICallHandler {
         });
     }
 
-    // this method handles all get requests!
+    // this method handles getting activity lists
     public static void MakeRequestGet(Context context, StringBuilder updatedURL, final VolleyCallback volleyCallback) {
         ArrayList<Activity> result = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, updatedURL.toString(), null,
@@ -218,4 +238,6 @@ public class APICallHandler {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonObjectRequest);
     }
+
+    // This method handles getting activity details about an activity
 }

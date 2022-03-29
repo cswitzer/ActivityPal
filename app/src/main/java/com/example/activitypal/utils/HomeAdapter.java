@@ -57,6 +57,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
         holder.binding.joinButton.setOnClickListener(view -> {
             Log.d(TAG, "onBindViewHolder: " + holder.binding.homeHiddenId.getText().toString());
+            APICallHandler.HandleActivityJoin(view.getContext(), holder.binding.homeHiddenId.getText().toString());
         });
     }
 
