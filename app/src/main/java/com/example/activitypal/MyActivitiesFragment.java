@@ -36,11 +36,6 @@ public class MyActivitiesFragment extends Fragment {
 
         FloatingActionButton addActivityBtn = view.findViewById(R.id.addActivityBtn);
 
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                result -> {
-                    // handle the retrieved image here
-                });
-
         addActivityBtn.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), AddActivityActivity.class);
             startActivity(intent);

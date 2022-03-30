@@ -5,12 +5,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 <TextView
                     android:id="@+id/joined_activity_location"
                     style="@style/activity_location_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/my_activities_location"
@@ -66,12 +66,14 @@
                     android:layout_width="80dp"
                     android:layout_height="50dp"
                     android:background="@drawable/edit_button"
-                    android:text="@string/edit_button"
+                    android:text="@string/leave_button"
                     android:textColor="#0D47A1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.27"
                     app:layout_constraintStart_toEndOf="@+id/joined_activity_location"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.43"
                     tools:ignore="TextContrastCheck,TextContrastCheck" />
 
                 <TextView
@@ -79,7 +81,7 @@
                     style="@style/activity_name_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/joined_activity_name"
+                    android:text="@string/placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/joined_activity_image"
                     app:layout_constraintTop_toTopOf="parent"
@@ -90,11 +92,20 @@
                     style="@style/image_style"
                     android:layout_width="120dp"
                     android:layout_height="150dp"
+                    android:contentDescription="@string/joined_activity_photo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_launcher_foreground"
-                    tools:ignore="ImageContrastCheck"
-                    android:contentDescription="@string/joined_activity_photo" />
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/joined_activity_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

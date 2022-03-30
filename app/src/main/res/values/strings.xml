@@ -53,4 +53,5 @@
     <string name="joined_activity_photo">Joined Activity Photo</string>
     <string name="joinedactivities">joinedactivities</string>
     <string name="joined_activities">Joined Activities</string>
+    <string name="leave_button">Leave</string>
 </resources>

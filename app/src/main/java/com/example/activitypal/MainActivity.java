@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     // initialize fragments
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
-    JoinedActivities joinedActivities = new JoinedActivities();
+    JoinedActivitiesFragment joinedActivities = new JoinedActivitiesFragment();
     MyActivitiesFragment myActivitiesFragment = new MyActivitiesFragment();
 
     ActivityMainBinding binding;
