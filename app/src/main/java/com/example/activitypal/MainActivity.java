@@ -35,7 +35,6 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     // initialize fragments
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
-    NotificationsFragment notificationsFragment = new NotificationsFragment();
+    JoinedActivities joinedActivities = new JoinedActivities();
     MyActivitiesFragment myActivitiesFragment = new MyActivitiesFragment();
 
     ActivityMainBinding binding;
@@ -103,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.container, homeFragment)
                             .commit();
                     return true;
-                case R.id.notification:
+                case R.id.joinedactivities:
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.container, notificationsFragment)
+                            .replace(R.id.container, joinedActivities)
                             .commit();
                     return true;
                 case R.id.myactivities:

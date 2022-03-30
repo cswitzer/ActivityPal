@@ -200,6 +200,24 @@ public class APICallHandler {
         });
     }
 
+    public static void FetchJoinedActivities(Context context, final VolleyCallback volleyCallback) {
+        final ArrayList<Activity> data = new ArrayList<>();
+        InitVolleyAndMoshi(context);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/join");
+        MakeRequestGet(context, updatedURL, new VolleyCallback() {
+            @Override
+            public void onSuccess(ArrayList<Activity> result) {
+                data.addAll(result);
+                volleyCallback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ArrayList<Activity> result) {
+
+            }
+        });
+    }
+
     // this method handles getting activity lists
     public static void MakeRequestGet(Context context, StringBuilder updatedURL, final VolleyCallback volleyCallback) {
         ArrayList<Activity> result = new ArrayList<>();

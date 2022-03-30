@@ -49,4 +49,8 @@
     <string name="join_btn_text">Join</string>
     <string name="my_activities_location">my_activities_location</string>
     <string name="edit_button">Edit</string>
+    <string name="joined_activity_name">Joined Activity Name</string>
+    <string name="joined_activity_photo">Joined Activity Photo</string>
+    <string name="joinedactivities">joinedactivities</string>
+    <string name="joined_activities">Joined Activities</string>
 </resources>
