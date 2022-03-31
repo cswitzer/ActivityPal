@@ -3,6 +3,7 @@ package com.example.activitypal.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,10 @@ public class JoinedActivitiesAdapter extends RecyclerView.Adapter<JoinedActiviti
                 .override(250, 250)
                 .circleCrop()
                 .into(holder.binding.joinedActivityImage);
+
+        holder.binding.leaveButton.setOnClickListener(view -> {
+            APICallHandler.HandleActivityLeave(view.getContext(), holder.binding.joinedActivityId.getText().toString());
+        });
     }
 
     @Override

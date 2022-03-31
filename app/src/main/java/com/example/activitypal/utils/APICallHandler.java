@@ -89,17 +89,30 @@ public class APICallHandler {
     }
 
     public static void HandleActivityJoin(Context context, String activityId) {
-        // activityId will be stored in the header
         type = "JoinActivity";
         InitVolleyAndMoshi(context);
         JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
-        // initialize empty activity; we only care about sending the activityId to the server
+        // initialize empty activity; we only care about sending the activityId and json token to the server
         Activity activity = new Activity("", "", "", "", "", "");
         activity.set_id(activityId);
         activity.setToken(SharedPrefsHandler.GetUserToken(context));
 
         String activityJson = adapter.toJson(activity);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/join/" + activityId);
+        MakeRequest(context, activityJson, updatedURL);
+    }
+
+    public static void HandleActivityLeave(Context context, String activityId) {
+        type = "LeaveActivity";
+        InitVolleyAndMoshi(context);
+        JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
+        // initialize empty activity; we only care about sending the activityId and json token to the server
+        Activity activity = new Activity("", "", "", "", "", "");
+        activity.set_id(activityId);
+        activity.setToken(SharedPrefsHandler.GetUserToken(context));
+
+        String activityJson = adapter.toJson(activity);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/leave/" + activityId);
         MakeRequest(context, activityJson, updatedURL);
     }
 
@@ -182,6 +195,7 @@ public class APICallHandler {
         });
     }
 
+    // This section handles get requests
     public static void FetchNearbyActivities(Context context, final VolleyCallback volleyCallback) {
         final ArrayList<Activity> data = new ArrayList<>();
         InitVolleyAndMoshi(context);
