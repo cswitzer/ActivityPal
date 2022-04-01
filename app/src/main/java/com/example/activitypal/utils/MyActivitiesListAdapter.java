@@ -1,5 +1,6 @@
 package com.example.activitypal.utils;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.activitypal.ActivityEditActivity;
 import com.example.activitypal.R;
 import com.example.activitypal.databinding.FragmentHomeBinding;
 import com.example.activitypal.databinding.MyActivitiesListAdapterBinding;
@@ -61,7 +63,15 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
                 .into(holder.binding.activityElPhoto);
 
         holder.binding.editButton.setOnClickListener(view -> {
-            Log.d(TAG, "onBindViewHolder: " + holder.binding.myActivityId.getText().toString());
+            Intent editIntent = new Intent(view.getContext(), ActivityEditActivity.class);
+            editIntent.putExtra("activityName", data.get(position).getName());
+            editIntent.putExtra("activityLocation", data.get(position).getAddress());
+            editIntent.putExtra("activityDate", data.get(position).getDate());
+            editIntent.putExtra("activityStart", data.get(position).getStartTime());
+            editIntent.putExtra("activityEnd", data.get(position).getEndTime());
+            editIntent.putExtra("activityImg", data.get(position).getBase64ImageString()); // read this in as a Bitmap
+            editIntent.putExtra("activityId", data.get(position).get_id());
+            view.getContext().startActivity(editIntent);
         });
     }
 
