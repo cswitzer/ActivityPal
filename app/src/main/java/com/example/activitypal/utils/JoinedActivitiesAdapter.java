@@ -43,6 +43,7 @@ public class JoinedActivitiesAdapter extends RecyclerView.Adapter<JoinedActiviti
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.joinedActivityName.setText(data.get(position).getName());
         holder.binding.joinedActivityLocation.setText(data.get(position).getAddress());
+        holder.binding.date.setText(data.get(position).getDate());
         holder.binding.joinedActivityStart.setText(data.get(position).getStartTime());
         holder.binding.joinedActivityEnd.setText(data.get(position).getEndTime());
         holder.binding.joinedActivityId.setText(data.get(position).get_id());
@@ -67,9 +68,10 @@ public class JoinedActivitiesAdapter extends RecyclerView.Adapter<JoinedActiviti
             Intent detailsIntent = new Intent(view.getContext(), ActivityDetailsActivity.class);
             detailsIntent.putExtra("activityName", data.get(position).getName());
             detailsIntent.putExtra("activityLocation", data.get(position).getAddress());
+            detailsIntent.putExtra("activityDate", data.get(position).getDate());
             detailsIntent.putExtra("activityStart", data.get(position).getStartTime());
             detailsIntent.putExtra("activityEnd", data.get(position).getEndTime());
-            detailsIntent.putExtra("activityByteImg", data.get(position).getBase64ImageString()); // read this in as a Bitmap
+            detailsIntent.putExtra("activityImg", data.get(position).getBase64ImageString()); // read this in as a Bitmap
             detailsIntent.putExtra("activityId", data.get(position).get_id());
             view.getContext().startActivity(detailsIntent);
         });

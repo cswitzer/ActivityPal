@@ -46,6 +46,7 @@ public class MyActivitiesListAdapter extends RecyclerView.Adapter<MyActivitiesLi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.activityElName.setText(data.get(position).getName());
         holder.binding.activityElLocation.setText(data.get(position).getAddress());
+        holder.binding.myDate.setText(data.get(position).getDate());
         holder.binding.myActivityStart.setText(data.get(position).getStartTime());
         holder.binding.myActivityEnd.setText(data.get(position).getEndTime());
         holder.binding.myActivityId.setText(data.get(position).get_id());

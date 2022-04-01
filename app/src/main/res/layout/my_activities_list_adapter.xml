@@ -7,7 +7,6 @@
         android:id="@+id/my_act_LL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -24,7 +23,7 @@
                     android:id="@+id/activity_el_photo"
                     style="@style/image_style"
                     android:layout_width="120dp"
-                    android:layout_height="150dp"
+                    android:layout_height="160dp"
                     android:contentDescription="@string/an_activity_image"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -45,39 +44,44 @@
 
                 <TextView
                     android:id="@+id/activity_el_location"
-                    android:text="@string/my_activities_location"
+                    style="@style/activity_location_style"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/activity_location"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_el_name"
-                    style="@style/activity_location_style" />
+                    app:layout_constraintTop_toBottomOf="@+id/activity_el_name" />
 
                 <TextView
                     android:id="@+id/my_activity_start"
+                    style="@style/activity_start_style"
+                    android:layout_marginStart="24dp"
                     android:text="@string/start_time"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
-                    app:layout_constraintVertical_bias="0.47"
-                    style="@style/activity_start_style" />
+                    app:layout_constraintTop_toBottomOf="@+id/my_date"
+                    app:layout_constraintVertical_bias="0.147" />
 
                 <TextView
                     android:id="@+id/dash_line"
+                    style="@style/time_dash_style"
                     android:text="@string/time_dash"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/my_activity_end"
-                    app:layout_constraintHorizontal_bias="0.476"
+                    app:layout_constraintHorizontal_bias="0.523"
                     app:layout_constraintStart_toEndOf="@+id/my_activity_start"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
-                    style="@style/time_dash_style" />
+                    app:layout_constraintTop_toBottomOf="@+id/my_date"
+                    app:layout_constraintVertical_bias="0.147" />
 
                 <TextView
                     android:id="@+id/my_activity_end"
+                    style="@style/activity_end_style"
+                    android:layout_marginEnd="92dp"
                     android:text="@string/end_time"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_el_location"
-                    style="@style/activity_end_style" />
+                    app:layout_constraintTop_toBottomOf="@+id/my_date"
+                    app:layout_constraintVertical_bias="0.161" />
 
                 <TextView
                     android:id="@+id/my_activity_id"
@@ -103,6 +107,17 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.54"
                     tools:ignore="TextContrastCheck,TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/my_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/date"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/activity_el_photo"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_el_location" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

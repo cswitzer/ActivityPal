@@ -54,4 +54,5 @@
     <string name="joinedactivities">joinedactivities</string>
     <string name="joined_activities">Joined Activities</string>
     <string name="leave_button">Leave</string>
+    <string name="date">Date</string>
 </resources>

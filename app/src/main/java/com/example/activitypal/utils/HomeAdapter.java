@@ -1,5 +1,6 @@
 package com.example.activitypal.utils;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.activitypal.ActivityDetailsActivity;
 import com.example.activitypal.HomeFragment;
 import com.example.activitypal.R;
 import com.example.activitypal.databinding.FragmentHomeBinding;
@@ -42,6 +44,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.homeActivityName.setText(data.get(position).getName());
         holder.binding.homeActivityLocation.setText(data.get(position).getAddress());
+        holder.binding.homeDate.setText(data.get(position).getDate());
         holder.binding.homeStart.setText(data.get(position).getStartTime());
         holder.binding.homeEnd.setText(data.get(position).getEndTime());
         holder.binding.homeHiddenId.setText(data.get(position).get_id());
@@ -51,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         Bitmap decodedByteImg = BitmapFactory.decodeByteArray(decodedStringImg, 0, decodedStringImg.length);
         Glide.with(holder.itemView.getContext())
                 .load(decodedByteImg)
-                .override(250, 250)
+                .override(250, 300)
                 .circleCrop()
                 .into(holder.binding.homeActivityImage);
 
@@ -60,6 +63,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             View cardView = (View)view.getParent().getParent();
             cardView.setVisibility(View.GONE);
             APICallHandler.HandleActivityJoin(view.getContext(), holder.binding.homeHiddenId.getText().toString());
+        });
+
+        View cardView = (View)holder.binding.joinButton.getParent().getParent();
+        cardView.setOnClickListener(view -> {
+            Intent detailsIntent = new Intent(view.getContext(), ActivityDetailsActivity.class);
+            detailsIntent.putExtra("activityName", data.get(position).getName());
+            detailsIntent.putExtra("activityLocation", data.get(position).getAddress());
+            detailsIntent.putExtra("activityDate", data.get(position).getDate());
+            detailsIntent.putExtra("activityStart", data.get(position).getStartTime());
+            detailsIntent.putExtra("activityEnd", data.get(position).getEndTime());
+            detailsIntent.putExtra("activityImg", data.get(position).getBase64ImageString()); // read this in as a Bitmap
+            detailsIntent.putExtra("activityId", data.get(position).get_id());
+            view.getContext().startActivity(detailsIntent);
         });
     }
 

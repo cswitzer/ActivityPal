@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // String city = addresses.get(0).getLocality();
-                // Log.d(TAG, "onLocationResult: " + city);
+                /*
+                 String city = addresses.get(0).getLocality();
+                 Log.d(TAG, "onLocationResult: " + city);
+                */
             }
         }
     };
@@ -84,13 +86,6 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         geocoder = new Geocoder(this, Locale.getDefault());
         addresses = new ArrayList<>();
-
-        // TODO: use a fragment to do this, since MainActivity will consists of various fragments
-        // the fragments are: my activities, create activities, activities in my area, etc.
-//        binding.activityBtn.setOnClickListener(view -> {
-//            String name = binding.ActivityName.getText().toString();
-//            APICallHandler.HandleActivityAdding(MainActivity.this, name);
-//        });
 
         // set to home fragment upon opening the application
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ActivityPal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ActivityEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ActivityDetailsActivity"
             android:exported="false" />
         <activity
