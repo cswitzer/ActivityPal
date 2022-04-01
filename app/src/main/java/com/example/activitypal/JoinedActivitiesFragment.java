@@ -56,6 +56,7 @@ public class JoinedActivitiesFragment extends Fragment {
         data.addAll(result);
         RecyclerView recyclerView = view.findViewById(R.id.joined_activities_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.d(TAG, "SetData: " + getContext());
         recyclerView.setAdapter(new JoinedActivitiesAdapter(data));
     }
 }

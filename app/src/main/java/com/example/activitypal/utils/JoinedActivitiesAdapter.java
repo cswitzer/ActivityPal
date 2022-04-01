@@ -1,7 +1,10 @@
 package com.example.activitypal.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.activitypal.ActivityDetailsActivity;
+import com.example.activitypal.AddActivityActivity;
+import com.example.activitypal.LoginActivity;
 import com.example.activitypal.databinding.JoinedActivitiesAdapterBinding;
 import com.example.activitypal.models.Activity;
 
@@ -50,7 +56,22 @@ public class JoinedActivitiesAdapter extends RecyclerView.Adapter<JoinedActiviti
                 .into(holder.binding.joinedActivityImage);
 
         holder.binding.leaveButton.setOnClickListener(view -> {
-            APICallHandler.HandleActivityLeave(view.getContext(), holder.binding.joinedActivityId.getText().toString());
+            Log.d(TAG, "onBindViewHolder: " + view.getParent().getParent());
+            View cardView = (View)view.getParent().getParent();
+            cardView.setVisibility(View.GONE);
+            // APICallHandler.HandleActivityLeave(view.getContext(), holder.binding.joinedActivityId.getText().toString());
+        });
+
+        View cardView = (View)holder.binding.leaveButton.getParent().getParent();
+        cardView.setOnClickListener(view -> {
+            Intent detailsIntent = new Intent(view.getContext(), ActivityDetailsActivity.class);
+            detailsIntent.putExtra("activityName", data.get(position).getName());
+            detailsIntent.putExtra("activityLocation", data.get(position).getAddress());
+            detailsIntent.putExtra("activityStart", data.get(position).getStartTime());
+            detailsIntent.putExtra("activityEnd", data.get(position).getEndTime());
+            detailsIntent.putExtra("activityByteImg", data.get(position).getBase64ImageString()); // read this in as a Bitmap
+            detailsIntent.putExtra("activityId", data.get(position).get_id());
+            view.getContext().startActivity(detailsIntent);
         });
     }
 
