@@ -59,7 +59,7 @@ public class JoinedActivitiesAdapter extends RecyclerView.Adapter<JoinedActiviti
             Log.d(TAG, "onBindViewHolder: " + view.getParent().getParent());
             View cardView = (View)view.getParent().getParent();
             cardView.setVisibility(View.GONE);
-            // APICallHandler.HandleActivityLeave(view.getContext(), holder.binding.joinedActivityId.getText().toString());
+            APICallHandler.HandleActivityLeave(view.getContext(), holder.binding.joinedActivityId.getText().toString());
         });
 
         View cardView = (View)holder.binding.leaveButton.getParent().getParent();
