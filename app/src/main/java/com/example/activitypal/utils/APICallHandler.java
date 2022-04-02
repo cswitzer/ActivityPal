@@ -170,20 +170,21 @@ public class APICallHandler {
     }
 
     private static void MakeRequestPatch(Context context, String json, StringBuilder updatedURL) {
-        JsonObjectRequest putRequest = null;
+        JsonObjectRequest patchRequest = null;
         try {
-            putRequest = new JsonObjectRequest(Request.Method.PUT, updatedURL.toString(), new JSONObject(json), (Response.Listener<JSONObject>) response -> {
-                Log.d(TAG, "MakeRequestPatch: Awesome");
+            patchRequest = new JsonObjectRequest(Request.Method.PATCH, updatedURL.toString(), new JSONObject(json), (Response.Listener<JSONObject>) response -> {
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
             }, error -> {
                 Log.d(TAG, "MakeRequestPatch: Error");
             });
         } catch (JSONException e) {
             Log.d(TAG, "MakeRequestPatch: " + e);
         }
-        assert putRequest != null;
-        putRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+        assert patchRequest != null;
+        patchRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        rq.add(putRequest);
+        rq.add(patchRequest);
     }
 
     private static void HandleResponse(Context context, String type, String token) {
