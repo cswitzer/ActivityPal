@@ -129,10 +129,6 @@ public class AddActivityActivity extends AppCompatActivity implements DatePicker
         });
 
         binding.addActivityBtn.setOnClickListener(view -> {
-            // SharedPrefsHandler.ClearUserPref(AddActivityActivity.this);
-            // format all time data
-            SimpleDateFormat activityDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
             // get all data to be sent to the server
             String activityName = binding.activityName.getText().toString();
 

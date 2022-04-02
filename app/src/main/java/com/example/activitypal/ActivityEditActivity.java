@@ -15,11 +15,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
 import com.example.activitypal.databinding.ActivityEditBinding;
+import com.example.activitypal.utils.APICallHandler;
 import com.example.activitypal.utils.DatePickerFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,6 +34,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,7 +67,6 @@ public class ActivityEditActivity extends AppCompatActivity implements DatePicke
         Bundle extras = getIntent().getExtras();
 
         binding.editActivityName.setText(extras.getString("activityName"));
-        // binding.editAutocompleteFragment.setHint()
         binding.editTextDate.setText(extras.getString("activityDate"));
         binding.editStart.setText(extras.getString("activityStart"));
         binding.editEnd.setText(extras.getString("activityEnd"));
@@ -135,6 +138,25 @@ public class ActivityEditActivity extends AppCompatActivity implements DatePicke
             // display previously selected time
             timePickerDialog.updateTime(endHour, endMinute);
             timePickerDialog.show();
+        });
+
+        binding.editActivityBtn.setOnClickListener(view -> {
+            // TODO: send this to the db to update the right activity
+            String activityName = binding.editActivityName.getText().toString();
+
+            binding.editImg.setDrawingCacheEnabled(true);
+            Bitmap bitmap = binding.editImg.getDrawingCache();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+            String encodedImgByteArray = Base64.getEncoder().encodeToString(imageByteArray);
+
+            String activityDate = binding.editTextDate.getText().toString();
+            String startTime = binding.editStart.getText().toString();
+            String endTime = binding.editEnd.getText().toString();
+            // address already set in InitMapsAutoCompleteFrag()
+            APICallHandler.HandleActivityEdit(ActivityEditActivity.this, activityName, encodedImgByteArray,
+                    activityDate, startTime, endTime, address, extras.getString("activityId"));
         });
     }
 

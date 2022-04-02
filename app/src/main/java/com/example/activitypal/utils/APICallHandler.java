@@ -11,6 +11,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.activitypal.LoginActivity;
@@ -88,6 +90,20 @@ public class APICallHandler {
         MakeRequest(context, activityJson, updatedURL);
     }
 
+    public static void HandleActivityEdit(Context context, String name, String base64ImageString, String date,
+                                          String startTime, String endTime, String address, String id) {
+        type = "EditActivity";
+        InitVolleyAndMoshi(context);
+        JsonAdapter<Activity> adapter = moshi.adapter(Activity.class);
+        // set token so that users are authenticated before adding an activity
+        Activity userActivity = new Activity(name, base64ImageString, date, startTime, endTime, address);
+        userActivity.setCity(address.split(", ")[1]);
+        userActivity.setToken(SharedPrefsHandler.GetUserToken(context));
+        String activityJson = adapter.toJson(userActivity);
+        StringBuilder updatedURL = new StringBuilder(baseURL).append("activities/" + id);
+        MakeRequestPatch(context, activityJson, updatedURL);
+    }
+
     public static void HandleActivityJoin(Context context, String activityId) {
         type = "JoinActivity";
         InitVolleyAndMoshi(context);
@@ -151,6 +167,23 @@ public class APICallHandler {
         postRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(postRequest);
+    }
+
+    private static void MakeRequestPatch(Context context, String json, StringBuilder updatedURL) {
+        JsonObjectRequest putRequest = null;
+        try {
+            putRequest = new JsonObjectRequest(Request.Method.PUT, updatedURL.toString(), new JSONObject(json), (Response.Listener<JSONObject>) response -> {
+                Log.d(TAG, "MakeRequestPatch: Awesome");
+            }, error -> {
+                Log.d(TAG, "MakeRequestPatch: Error");
+            });
+        } catch (JSONException e) {
+            Log.d(TAG, "MakeRequestPatch: " + e);
+        }
+        assert putRequest != null;
+        putRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.add(putRequest);
     }
 
     private static void HandleResponse(Context context, String type, String token) {
