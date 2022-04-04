@@ -32,10 +32,11 @@ import java.util.Map;
 
 public class APICallHandler {
     private static final String TAG = "APICallHandler";
-    private static String baseURL = "http://10.0.2.2:3000/";
+    private static final String baseURL = "http://10.0.2.2:3000/";
     private static RequestQueue rq;
     private static Moshi moshi;
     private static String type;
+    private static String city;
 
     private static void InitVolleyAndMoshi(Context context) {
         rq = Volley.newRequestQueue(context);
@@ -172,7 +173,7 @@ public class APICallHandler {
     private static void MakeRequestPatch(Context context, String json, StringBuilder updatedURL) {
         JsonObjectRequest patchRequest = null;
         try {
-            patchRequest = new JsonObjectRequest(Request.Method.PATCH, updatedURL.toString(), new JSONObject(json), (Response.Listener<JSONObject>) response -> {
+            patchRequest = new JsonObjectRequest(Request.Method.PATCH, updatedURL.toString(), new JSONObject(json), response -> {
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
             }, error -> {
@@ -230,7 +231,8 @@ public class APICallHandler {
     }
 
     // This section handles get requests
-    public static void FetchNearbyActivities(Context context, final VolleyCallback volleyCallback) {
+    public static void FetchNearbyActivities(Context context, String city, final VolleyCallback volleyCallback) {
+        APICallHandler.city = city;
         final ArrayList<Activity> data = new ArrayList<>();
         InitVolleyAndMoshi(context);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
@@ -296,13 +298,21 @@ public class APICallHandler {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("token", SharedPrefsHandler.GetUserToken(context));
-                params.put("city", "Rexburg");
+                params.put("city", APICallHandler.city);
                 return params;
             }
         };
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rq.add(jsonObjectRequest);
+    }
+
+    static public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        APICallHandler.city = city;
     }
 
     // This method handles getting activity details about an activity

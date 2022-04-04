@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -58,22 +60,22 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
     Geocoder geocoder;
+
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
             // use geocoder to convert global coordinates to a city name
             for (Location location : locationResult.getLocations()) {
-                Log.d(TAG, "onLocationResult: " + location.toString());
                 try {
+                    Log.d(TAG, "onLocationResult:  Here I am!");
                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("city", addresses.get(0).getLocality());
+                    homeFragment.setArguments(bundle);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                /*
-                 String city = addresses.get(0).getLocality();
-                 Log.d(TAG, "onLocationResult: " + city);
-                */
             }
         }
     };
@@ -88,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         addresses = new ArrayList<>();
 
         // set to home fragment upon opening the application
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(100000);
+        locationRequest.setInterval(4000);
         locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
@@ -218,5 +219,13 @@ public class MainActivity extends AppCompatActivity {
                         LOCATION_REQUEST_CODE);
             }
         }
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }
