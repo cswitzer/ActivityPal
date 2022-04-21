@@ -6,21 +6,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.activitypal.databinding.ActivityMainBinding;
 import com.example.activitypal.utils.APICallHandler;
@@ -68,10 +72,11 @@ public class MainActivity extends AppCompatActivity {
             // use geocoder to convert global coordinates to a city name
             for (Location location : locationResult.getLocations()) {
                 try {
-                    Log.d(TAG, "onLocationResult:  Here I am!");
                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    String city = addresses.get(0).getLocality();
+                    SharedPrefsHandler.StoreUserLocation(MainActivity.this, city);
                     Bundle bundle = new Bundle();
-                    bundle.putString("city", addresses.get(0).getLocality());
+                    bundle.putString("city", city);
                     homeFragment.setArguments(bundle);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -89,30 +94,10 @@ public class MainActivity extends AppCompatActivity {
         geocoder = new Geocoder(this, Locale.getDefault());
         addresses = new ArrayList<>();
 
-        // set to home fragment upon opening the application
-        binding.bottomNavigation.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.container, homeFragment)
-                            .commit();
-                    return true;
-                case R.id.joinedactivities:
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.container, joinedActivities)
-                            .commit();
-                    return true;
-                case R.id.myactivities:
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.container, myActivitiesFragment)
-                            .commit();
-                    return true;
-            }
-            return false;
-        });
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, homeFragment)
+                .commit();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
@@ -125,6 +110,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            binding.bottomNavigation.setOnItemSelectedListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.container, homeFragment)
+                                .commit();
+                        return true;
+                    case R.id.joinedactivities:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.container, joinedActivities)
+                                .commit();
+                        return true;
+                    case R.id.myactivities:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.container, myActivitiesFragment)
+                                .commit();
+                        return true;
+                }
+                return false;
+            });
             checkSettingsAndStartLocationUpdates();
         } else {
             askLocationPermission();

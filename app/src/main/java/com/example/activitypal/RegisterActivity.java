@@ -1,6 +1,7 @@
 package com.example.activitypal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.PatternsCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
@@ -26,5 +27,17 @@ public class RegisterActivity extends AppCompatActivity {
             String password = binding.password.getText().toString();
             APICallHandler.HandleRegistration(RegisterActivity.this, username, email, password);
         });
+    }
+
+    private boolean CheckCredentialsValid(String username, String email, String password) {
+        if (username.isEmpty() || password.isEmpty()) {
+            return false;
+        }
+
+        if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 }

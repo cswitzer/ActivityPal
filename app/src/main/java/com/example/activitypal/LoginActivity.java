@@ -1,6 +1,7 @@
 package com.example.activitypal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.PatternsCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
@@ -27,8 +28,10 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(view -> {
             String email = binding.loginEmail.getText().toString();
             String password = binding.loginPassword.getText().toString();
-            SharedPrefsHandler.SaveUserCred(LoginActivity.this, email, password);
-            APICallHandler.HandleLogin(LoginActivity.this, email, password);
+            if (CheckCredentialsValid(email, password)) {
+                SharedPrefsHandler.SaveUserCred(LoginActivity.this, email, password);
+                APICallHandler.HandleLogin(LoginActivity.this, email, password);
+            }
         });
 
         binding.switchToRegBtn.setOnClickListener(view -> {
@@ -43,5 +46,13 @@ public class LoginActivity extends AppCompatActivity {
             // TODO: The user is logged in, so direct them to the MainActivity
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
+    }
+
+    private boolean CheckCredentialsValid(String email, String password) {
+        if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,7 +1,12 @@
 package com.example.activitypal;
 
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +24,15 @@ import com.example.activitypal.utils.Pair;
 import com.example.activitypal.utils.SharedPrefsHandler;
 import com.example.activitypal.utils.VolleyCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
 
     private String city;
+    private Geocoder geocoder;
+
     ArrayList<Activity> data = new ArrayList<>();
 
     @Override
@@ -40,7 +48,10 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         // get the city name
-        if (getArguments() != null) {
+        if (getArguments() == null) {
+            Log.d(TAG, "onStart: getting shared prefs");
+            city = SharedPrefsHandler.GetUserLocation(getContext());
+        } else {
             city = getArguments().getString("city");
         }
     }

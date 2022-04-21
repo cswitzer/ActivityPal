@@ -233,6 +233,7 @@ public class APICallHandler {
     // This section handles get requests
     public static void FetchNearbyActivities(Context context, String city, final VolleyCallback volleyCallback) {
         APICallHandler.city = city;
+        Log.d(TAG, "FetchNearbyActivities: " + APICallHandler.city);
         final ArrayList<Activity> data = new ArrayList<>();
         InitVolleyAndMoshi(context);
         StringBuilder updatedURL = new StringBuilder(baseURL).append("activities");
@@ -301,6 +302,7 @@ public class APICallHandler {
                 params.put("city", APICallHandler.city);
                 return params;
             }
+
         };
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

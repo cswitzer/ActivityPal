@@ -22,6 +22,13 @@ public class SharedPrefsHandler {
         editor.apply();
     }
 
+    public static void StoreUserLocation(Context context, String location) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("location", location);
+        editor.apply();
+    }
+
     public static void ClearUserPref(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -39,5 +46,11 @@ public class SharedPrefsHandler {
         SharedPreferences preferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
         String token = preferences.getString("token", "");
         return token;
+    }
+
+    public static String GetUserLocation(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(MESSAGE_ID, Context.MODE_PRIVATE);
+        String city = preferences.getString("city", "");
+        return city;
     }
 }
